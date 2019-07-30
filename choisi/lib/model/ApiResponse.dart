@@ -1,4 +1,5 @@
 import 'package:choisi/model/token.dart';
+import 'package:choisi/model/token.dart';
 
 class ApiResponse {
 

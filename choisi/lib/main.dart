@@ -37,15 +37,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  bool isVisible = false;
-  bool homme;
-
   String token;
 
   @override
   void initState() {
     super.initState();
-    decompte();
     API.getToken().then((value) {
       if(value.status==200) {
         setState(() {
@@ -73,20 +69,12 @@ InkWell imageLogo(String image, String url) {
     );
   }
 
-  void changePage(/*bool sexe*/) {
+  Future changePage(/*bool sexe*/) async {
+    var shared = await SharedPreferences.getInstance();
+    shared.setString("tourSuivant", "");
     Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bContext){
       return new Menu(token: token,);
     }));
-  }
-
-  Future<Widget> decompte() async {
-    var shared = await SharedPreferences.getInstance();
-    shared.setString("tourSuivant", "");
-    Timer(Duration(milliseconds: 3000), () {
-      setState(() {
-        isVisible = true;
-      });
-    });
   }
 
   @override
@@ -97,12 +85,17 @@ InkWell imageLogo(String image, String url) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Inspiré des idées du youtubeur \nSofyan Boudouni',
+              'Inspire des idees du youtubeur \nSofyan Boudouni',
               textAlign: TextAlign.center,
+              textScaleFactor: 2.0,
+              style: new TextStyle(
+                fontFamily: 'Brushield'
+              ),
             ),
             Container(
                 width: 200.0,
                 height: 200.0,
+                margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
                 decoration: new BoxDecoration(
                     shape: BoxShape.circle,
                     image: new DecorationImage(
@@ -111,10 +104,9 @@ InkWell imageLogo(String image, String url) {
                     )
                 )
             ),
-            Padding(padding: EdgeInsets.only(bottom: 50.0),),
             Row(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 imageLogo("instagram.png", "https://www.instagram.com/sofyanboudouni/?hl=fr"),
                 imageLogo("youtube.png", "https://www.youtube.com/user/sofyanfaitducinema"),
@@ -123,19 +115,18 @@ InkWell imageLogo(String image, String url) {
             ),
             //new CircularProgressIndicator(),
             Padding(padding: EdgeInsets.all(20.0),),
-            Visibility(
-              visible: !isVisible,
-              child: Text("Chargement en cours ..."),
-            ),
-            Visibility(
-              visible: isVisible,
-                child: new RaisedButton(
-                  onPressed: () {
-                    changePage();
-                    //_showDialog();
-                  },
-                  child: new Text("Aller au menu"),
-                )
+            RaisedButton(
+              onPressed: () {
+                changePage();
+                //_showDialog();
+              },
+              child: new Text(
+                "Aller au menu",
+                textScaleFactor: 2.0,
+                style: new TextStyle(
+                    fontFamily: 'Brushield'
+                ),
+              ),
             )
           ],
         ),

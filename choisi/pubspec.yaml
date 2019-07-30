@@ -30,12 +30,16 @@ dependencies:
   shared_preferences: ^0.5.3+2
   cached_network_image: ^1.1.0
   audioplayers: any
+  flutter_launcher_icons: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
+flutter_icons :
+  image_path : "assets/logo.jpg"
+  android : true
+  ios: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -58,24 +62,30 @@ flutter:
     - test.png
     - versus.png
     - fini.gif
+    - logo.jpg
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
+  fonts:
+    - family: Brushield
+      fonts:
+        - asset: fonts/Brushield.ttf
+        - asset: fonts/Brushield italic.ttf
+          style: italic
 
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
+    - family: Disney
+      fonts:
+        - asset: fonts/waltographUI.ttf
 
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+    - family : Roboto
+      fonts:
+        - asset : fonts/Roboto-Thin.ttf
+
+    - family : Varsity
+      fonts:
+       - asset : fonts/varsity_regular.ttf
+
+    - family : Lemon
+      fonts:
+        - asset : fonts/LemonMilk.otf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

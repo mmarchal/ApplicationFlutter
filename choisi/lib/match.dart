@@ -1,7 +1,10 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:choisi/model/avengers.dart';
 import 'package:choisi/model/chansons.dart';
+import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
+import 'package:choisi/model/mechants.dart';
 import 'package:choisi/resultat.dart';
 import 'package:choisi/tableau.dart';
 import 'package:flutter/material.dart';
@@ -92,40 +95,49 @@ class _Match extends State<Match> {
   List<Widget> widgetAselectionner() {
     List<Widget> list = new List();
     switch (widget.id) {
+      case 1 :
+        createWidgetsFilms(list);
+        break;
       case 2 :
         createWidgetsRealisateur(list);
         break;
       case 3 :
         createWidgetsJeux(list);
         break;
+      case 4 :
+        createWidgetsAvengers(list);
+        break;
       case 5 :
         createWidgetsChansons(list);
+        break;
+      case 6 :
+        createWidgetsMechants(list);
         break;
     }
     return list;
   }
 
-  void realChoisi(int i, var tournoi) {
+  void realChoisi(var tournoi) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirmation'),
+          title: Text('Confirmation', style: TextStyle(fontFamily: 'Disney'),),
           content: Text(
-              'Vous préférez ${tournoi.nom} ?'
+              'Vous préférez \n${tournoi.nom} ?', style: TextStyle(fontFamily: 'Disney'), textAlign: TextAlign.center,
           ),
           actions: <Widget>[
             FlatButton(
-              child: const Text('NON'),
+              child: const Text('NON', style: TextStyle(fontFamily: 'Disney'),),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             FlatButton(
-              child: const Text('OUI'),
+              child: const Text('OUI', style: TextStyle(fontFamily: 'Disney'),),
               onPressed: () {
-                setDatas(i, tournoi);
+                setDatas(tournoi);
               },
             )
           ],
@@ -134,7 +146,7 @@ class _Match extends State<Match> {
     );
   }
 
-  void setDatas(int i, var tournoi) async {
+  void setDatas(var tournoi) async {
     widget.domiciles.removeAt(0);
     widget.exterieurs.removeAt(0);
     var sharedPreferences = await SharedPreferences.getInstance();
@@ -158,6 +170,10 @@ class _Match extends State<Match> {
       String data;
       var vainqueur;
       switch (widget.id) {
+        case 1 :
+          data = shared.getString("tourSuivant").split("Films")[1];
+          vainqueur = Tournoi.fromJson(json.decode(data));
+          break;
         case 2 :
           data = shared.getString("tourSuivant").split("Tournoi")[1];
           vainqueur = Tournoi.fromJson(json.decode(data));
@@ -166,9 +182,17 @@ class _Match extends State<Match> {
           data = shared.getString("tourSuivant").split("Jeux")[1];
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
+        case 4 :
+          data = shared.getString("tourSuivant").split("Avengers")[1];
+          vainqueur = Jeux.fromJson(json.decode(data));
+          break;
         case 5 :
           data = shared.getString("tourSuivant").split("Chansons")[1];
           vainqueur = Chansons.fromJson(json.decode(data));
+          break;
+        case 6 :
+          data = shared.getString("tourSuivant").split("Mechants")[1];
+          vainqueur = Jeux.fromJson(json.decode(data));
           break;
       }
       Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bContext){
@@ -179,6 +203,15 @@ class _Match extends State<Match> {
       String must;
       for(int i=1; i<decoupe.length; i++) {
         switch (widget.id) {
+          case 1 :
+            must = decoupe[i].split("Films")[1];
+            try {
+              Films data = Films.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
           case 2 :
             must = decoupe[i].split("Tournoi")[1];
             try {
@@ -197,10 +230,28 @@ class _Match extends State<Match> {
               print(e);
             }
             break;
+          case 4 :
+            must = decoupe[i].split("Avengers")[1];
+            try {
+              Avengers data = Avengers.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
           case 5 :
             must = decoupe[i].split("Chansons")[1];
             try {
               Chansons data = Chansons.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 6 :
+            must = decoupe[i].split("Mechants")[1];
+            try {
+              Mechants data = Mechants.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
@@ -260,23 +311,23 @@ class _Match extends State<Match> {
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
-            new Text(domicile.nom),
+            new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
            new Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                  new Text(domicile.info1),
+                  new Text(domicile.info1, style: TextStyle(fontFamily: 'Lemon'),),
               new Padding(padding: EdgeInsets.only(left: 20.0)),
-              new Text(domicile.info2),
+              new Text(domicile.info2, style: TextStyle(fontFamily: 'Lemon'),),
               new Padding(padding: EdgeInsets.only(left: 20.0)),
-              new Text(domicile.info3)
+              new Text(domicile.info3, style: TextStyle(fontFamily: 'Lemon'),)
               ],
             )
           ],
         ),
       ),
       onTap: () {
-        realChoisi(0, domicile);
+        realChoisi(domicile);
       },
     );
     Widget widget2 = new InkWell(
@@ -294,23 +345,23 @@ class _Match extends State<Match> {
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
-            new Text(exterieur.nom),
+            new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
             new Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                new Text(exterieur.info1),
+                new Text(exterieur.info1, style: TextStyle(fontFamily: 'Lemon'),),
                 new Padding(padding: EdgeInsets.only(left: 20.0)),
-                new Text(exterieur.info2),
+                new Text(exterieur.info2, style: TextStyle(fontFamily: 'Lemon'),),
                 new Padding(padding: EdgeInsets.only(left: 20.0)),
-                new Text(exterieur.info3)
+                new Text(exterieur.info3, style: TextStyle(fontFamily: 'Lemon'),)
               ],
             )
           ],
         ),
       ),
       onTap: () {
-        realChoisi(1, exterieur);
+        realChoisi(exterieur);
       },
     );
     list.add(widget1);
@@ -326,7 +377,7 @@ class _Match extends State<Match> {
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            new Text(domicile.nom),
+            new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
               imageUrl: domicile.image,
               width: MediaQuery.of(context).size.width/2,
@@ -338,7 +389,7 @@ class _Match extends State<Match> {
         ),
       ),
       onTap: () {
-        realChoisi(0, domicile);
+        realChoisi(domicile);
       },
     );
     Widget widget2 = new InkWell(
@@ -349,7 +400,7 @@ class _Match extends State<Match> {
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            new Text(exterieur.nom),
+            new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
               imageUrl: exterieur.image,
               width: MediaQuery.of(context).size.width/2,
@@ -361,7 +412,7 @@ class _Match extends State<Match> {
         ),
       ),
       onTap: () {
-        realChoisi(1, exterieur);
+        realChoisi(exterieur);
       },
     );
     list.add(widget1);
@@ -378,7 +429,7 @@ class _Match extends State<Match> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            new Text(domicile.nom),
+            new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
               imageUrl: domicile.image,
               width: MediaQuery.of(context).size.width/2,
@@ -400,7 +451,7 @@ class _Match extends State<Match> {
         ),
       ),
       onTap: () {
-        realChoisi(0, domicile);
+        realChoisi(domicile);
       },
     );
     Widget widget2 = new InkWell(
@@ -412,7 +463,7 @@ class _Match extends State<Match> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            new Text(exterieur.nom),
+            new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
               imageUrl: exterieur.image,
               width: MediaQuery.of(context).size.width/2,
@@ -433,7 +484,212 @@ class _Match extends State<Match> {
         ),
       ),
       onTap: () {
-        realChoisi(1, exterieur);
+        realChoisi(exterieur);
+      },
+    );
+    list.add(widget1);
+    list.add(widget2);
+  }
+
+  void createWidgetsFilms(List<Widget> list) {
+    Widget widget1 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.lightBlue.shade300,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            new Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CachedNetworkImage(
+                      imageUrl: domicile.image,
+                      width: MediaQuery.of(context).size.width/2,
+                      height: MediaQuery.of(context).size.width/2,
+                      placeholder: (context,url) => CircularProgressIndicator(),
+                      errorWidget: (context,url,error) => new Icon(Icons.error),
+                    ),
+                    Text(domicile.annee, style: TextStyle(fontFamily: 'Lemon'),)
+                  ],
+                ),
+                new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(domicile.acteur1, style: TextStyle(fontFamily: 'Lemon'),),
+                    Text(domicile.acteur2, style: TextStyle(fontFamily: 'Lemon'),),
+                    Container(
+                      margin: EdgeInsets.only(top: 30),
+                      width: MediaQuery.of(context).size.width/3,
+                      child: Text(domicile.synopsis, textScaleFactor: 0.7, textAlign: TextAlign.center,),
+                    )
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(domicile);
+      },
+    );
+    Widget widget2 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.yellow.shade300,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            new Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CachedNetworkImage(
+                      imageUrl: exterieur.image,
+                      width: MediaQuery.of(context).size.width/2,
+                      height: MediaQuery.of(context).size.width/2,
+                      placeholder: (context,url) => CircularProgressIndicator(),
+                      errorWidget: (context,url,error) => new Icon(Icons.error),
+                    ),
+                    Text(exterieur.annee, style: TextStyle(fontFamily: 'Lemon'),)
+                  ],
+                ),
+                new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(exterieur.acteur1, style: TextStyle(fontFamily: 'Lemon'),),
+                    Text(exterieur.acteur2, style: TextStyle(fontFamily: 'Lemon'),),
+                    Container(
+                      margin: EdgeInsets.only(top: 30),
+                      width: MediaQuery.of(context).size.width/3,
+                      child: Text(exterieur.synopsis, textScaleFactor: 0.7, textAlign: TextAlign.center,),
+                    )
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(exterieur);
+      },
+    );
+    list.add(widget1);
+    list.add(widget2);
+  }
+
+  void createWidgetsAvengers(List<Widget> list) {
+    Widget widget1 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.pink.shade300,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            CachedNetworkImage(
+              imageUrl: domicile.image,
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.width/2,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context,url,error) => new Icon(Icons.error),
+            ),
+            new Text(domicile.description, style: TextStyle(fontFamily: 'Lemon'),)
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(domicile);
+      },
+    );
+    Widget widget2 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.amber.shade800,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            CachedNetworkImage(
+              imageUrl: exterieur.image,
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.width/2,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context,url,error) => new Icon(Icons.error),
+            ),
+            new Text(exterieur.description, style: TextStyle(fontFamily: 'Lemon'),)
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(exterieur);
+      },
+    );
+    list.add(widget1);
+    list.add(widget2);
+  }
+
+  void createWidgetsMechants(List<Widget> list) {
+    Widget widget1 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.indigo.shade200,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            CachedNetworkImage(
+              imageUrl: domicile.image,
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.width/2,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context,url,error) => new Icon(Icons.error),
+            ),
+            new Text(domicile.ennemi, style: TextStyle(fontFamily: 'Lemon'),)
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(domicile);
+      },
+    );
+    Widget widget2 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.deepOrange.shade200,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            CachedNetworkImage(
+              imageUrl: exterieur.image,
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.width/2,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context,url,error) => new Icon(Icons.error),
+            ),
+            new Text(exterieur.ennemi, style: TextStyle(fontFamily: 'Lemon'),)
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(exterieur);
       },
     );
     list.add(widget1);

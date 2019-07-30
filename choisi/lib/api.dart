@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:choisi/model/ApiResponse.dart';
-import 'package:choisi/model/token.dart';
 import 'package:http/http.dart' as http;
 
-const urlServeur = "http://192.168.0.241:8080";
+const urlServeur = "http://appliraspberry.ddns.net:8080";
 
 class API {
   static Future getUsers(String token) {
@@ -25,6 +24,27 @@ class API {
   static Future getGames(String token) {
     var url = urlServeur + "/jeuxvideos";
     return http.get(url,  headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    });
+  }
+
+  static Future getMovies(String token) {
+    var url = urlServeur + "/films";
+    return http.get(url, headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    });
+  }
+
+  static Future getAvengers(String token) {
+    var url = urlServeur + "/avengers";
+    return http.get(url,  headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    });
+  }
+
+  static Future getMechants(String token) {
+    var url = urlServeur + "/mechants";
+    return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
     });
   }
