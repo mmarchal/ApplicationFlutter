@@ -21,6 +21,13 @@ class API {
     });
   }
 
+  static Future getDisney(String token) {
+    var url = urlServeur + "/dessinsanimes";
+    return http.get(url, headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    });
+  }
+
   static Future getGames(String token) {
     var url = urlServeur + "/jeuxvideos";
     return http.get(url,  headers: {

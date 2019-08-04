@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:choisi/api.dart';
 import 'package:choisi/model/chansons.dart';
+import 'package:choisi/model/disney.dart';
 import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/avengers.dart';
@@ -30,6 +31,7 @@ class _Menu extends State<Menu> {
   var jeux = new List<Jeux>();
   var avengers = new List<Avengers>();
   var mechants = new List<Mechants>();
+  var disney = new List<Disney>();
   var rencontresId = new List<int>();
   var mapRencontres = new List<Map>();
 
@@ -76,6 +78,12 @@ class _Menu extends State<Menu> {
       setState(() {
         Iterable list = json.decode(response.body);
         mechants = list.map((mechant) => Mechants.fromJson(mechant)).toList();
+      });
+    });
+    API.getDisney(widget.token).then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        disney = list.map((disneyF) => Disney.fromJson(disneyF)).toList();
       });
     });
     isFinish = true;
@@ -128,6 +136,12 @@ class _Menu extends State<Menu> {
           map = {
             "domicile" : mechants[list[i]],
             "exterieur" : mechants[list[i+1]]
+          };
+          break;
+        case 7 :
+          map = {
+            "domicile" : disney[list[i]],
+            "exterieur" : disney[list[i+1]]
           };
           break;
       }
@@ -256,6 +270,16 @@ class _Menu extends State<Menu> {
                                       checkDatasInRealisateur(6, mechants);
                                     },
                                     child: new Text("Méchants", style: TextStyle(fontFamily: 'Disney'),),
+                                  ),
+                                  margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width /2.5,
+                                  child: RaisedButton(
+                                    onPressed: () {
+                                      checkDatasInRealisateur(7, disney);
+                                    },
+                                    child: new Text("Films Disney", style: TextStyle(fontFamily: 'Disney'),),
                                   ),
                                   margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
                                 ),

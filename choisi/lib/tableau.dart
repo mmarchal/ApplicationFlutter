@@ -2,6 +2,7 @@ import 'package:choisi/match.dart';
 import 'package:choisi/menu.dart';
 import 'package:choisi/model/avengers.dart';
 import 'package:choisi/model/chansons.dart';
+import 'package:choisi/model/disney.dart';
 import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/mechants.dart';
@@ -73,6 +74,11 @@ class _Tableau extends State<Tableau> {
           Rencontre rencontre = Rencontre.mechantsFromJson(test);
           listeDomicile.add(rencontre.domicileM);
           listeExterieur.add(rencontre.exterieurM);
+          break;
+        case 7 :
+          Rencontre rencontre = Rencontre.disneyFromJson(test);
+          listeDomicile.add(rencontre.domicileD);
+          listeExterieur.add(rencontre.exterieurD);
           break;
       }
     });
@@ -179,6 +185,7 @@ class Rencontre {
   Films domicileF, exterieurF;
   Avengers domicileA, exterieurA;
   Mechants domicileM, exterieurM;
+  Disney domicileD, exterieurD;
 
   Rencontre.tournoiFromJson(Map map) :
     domicileT = map["domicile"],
@@ -203,4 +210,8 @@ class Rencontre {
   Rencontre.mechantsFromJson(Map map) :
         domicileM = map["domicile"],
         exterieurM = map["exterieur"];
+
+  Rencontre.disneyFromJson(Map map) :
+        domicileD = map["domicile"],
+        exterieurD = map["exterieur"];
 }

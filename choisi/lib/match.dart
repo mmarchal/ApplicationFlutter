@@ -113,6 +113,9 @@ class _Match extends State<Match> {
       case 6 :
         createWidgetsMechants(list);
         break;
+      case 7 :
+        createWidgetsDisney(list);
+        break;
     }
     return list;
   }
@@ -192,6 +195,10 @@ class _Match extends State<Match> {
           break;
         case 6 :
           data = shared.getString("tourSuivant").split("Mechants")[1];
+          vainqueur = Jeux.fromJson(json.decode(data));
+          break;
+        case 7 :
+          data = shared.getString("tourSuivant").split("Disney")[1];
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
       }
@@ -685,6 +692,95 @@ class _Match extends State<Match> {
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
             new Text(exterieur.ennemi, style: TextStyle(fontFamily: 'Lemon'),)
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(exterieur);
+      },
+    );
+    list.add(widget1);
+    list.add(widget2);
+  }
+
+  void createWidgetsDisney(List<Widget> list) {
+    Widget widget1 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.deepOrange.shade800,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            new Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CachedNetworkImage(
+                      imageUrl: domicile.image,
+                      width: MediaQuery.of(context).size.width/2,
+                      height: MediaQuery.of(context).size.width/2,
+                      placeholder: (context,url) => CircularProgressIndicator(),
+                      errorWidget: (context,url,error) => new Icon(Icons.error),
+                    ),
+                    Text(domicile.annee, style: TextStyle(fontFamily: 'Lemon'),)
+                  ],
+                ),
+                new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text("Gentil : ${domicile.gentil}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
+                    Text("Méchant : ${domicile.mechant}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(domicile);
+      },
+    );
+    Widget widget2 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.deepPurpleAccent.shade100,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            new Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CachedNetworkImage(
+                      imageUrl: exterieur.image,
+                      width: MediaQuery.of(context).size.width/2,
+                      height: MediaQuery.of(context).size.width/2,
+                      placeholder: (context,url) => CircularProgressIndicator(),
+                      errorWidget: (context,url,error) => new Icon(Icons.error),
+                    ),
+                    Text(exterieur.annee, style: TextStyle(fontFamily: 'Lemon'),)
+                  ],
+                ),
+                new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text("Gentil : ${exterieur.gentil}", style: TextStyle(fontFamily: 'Lemon'), textScaleFactor: 0.8,),
+                    Text("Méchant : ${exterieur.mechant}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
+                  ],
+                )
+              ],
+            )
           ],
         ),
       ),
