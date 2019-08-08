@@ -6,6 +6,7 @@ import 'package:choisi/model/disney.dart';
 import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/mechants.dart';
+import 'package:choisi/model/series.dart';
 import 'package:choisi/model/tournoi.dart';
 import 'package:flutter/material.dart';
 
@@ -61,21 +62,36 @@ class _Tableau extends State<Tableau> {
           listeExterieur.add(rencontre.exterieurJ);
           break;
         case 4 :
+          Rencontre rencontre = Rencontre.horreurFromJson(test);
+          listeDomicile.add(rencontre.domicileH);
+          listeExterieur.add(rencontre.exterieurH);
+          break;
+        case 5 :
+          Rencontre rencontre = Rencontre.seriesFromJson(test);
+          listeDomicile.add(rencontre.domicileS);
+          listeExterieur.add(rencontre.exterieurS);
+          break;
+        case 6 :
+          Rencontre rencontre = Rencontre.seriesAnimesFromJson(test);
+          listeDomicile.add(rencontre.domicileSA);
+          listeExterieur.add(rencontre.exterieurSA);
+          break;
+        case 7 :
           Rencontre rencontre = Rencontre.avengersFromJson(test);
           listeDomicile.add(rencontre.domicileA);
           listeExterieur.add(rencontre.exterieurA);
           break;
-        case 5 :
+        case 8 :
           Rencontre rencontre = Rencontre.chansonFromJson(test);
           listeDomicile.add(rencontre.domicileC);
           listeExterieur.add(rencontre.exterieurC);
           break;
-        case 6 :
+        case 9 :
           Rencontre rencontre = Rencontre.mechantsFromJson(test);
           listeDomicile.add(rencontre.domicileM);
           listeExterieur.add(rencontre.exterieurM);
           break;
-        case 7 :
+        case 10 :
           Rencontre rencontre = Rencontre.disneyFromJson(test);
           listeDomicile.add(rencontre.domicileD);
           listeExterieur.add(rencontre.exterieurD);
@@ -179,33 +195,48 @@ class _Tableau extends State<Tableau> {
 }
 
 class Rencontre {
-  Tournoi domicileT, exterieurT;
-  Chansons domicileC, exterieurC;
-  Jeux domicileJ, exterieurJ;
   Films domicileF, exterieurF;
+  Tournoi domicileT, exterieurT; //Réalisateur
+  Jeux domicileJ, exterieurJ;
+  Films domicileH, exterieurH;
+  Series domicileS, exterieurS;
+  Series domicileSA, exterieurSA;
   Avengers domicileA, exterieurA;
+  Chansons domicileC, exterieurC;
   Mechants domicileM, exterieurM;
   Disney domicileD, exterieurD;
-
-  Rencontre.tournoiFromJson(Map map) :
-    domicileT = map["domicile"],
-    exterieurT = map["exterieur"];
-
-  Rencontre.chansonFromJson(Map map) :
-      domicileC = map["domicile"],
-      exterieurC = map["exterieur"];
-
-  Rencontre.jeuxFromJson(Map map) :
-        domicileJ = map["domicile"],
-        exterieurJ = map["exterieur"];
 
   Rencontre.filmsFromJson(Map map) :
         domicileF = map["domicile"],
         exterieurF = map["exterieur"];
 
+  Rencontre.tournoiFromJson(Map map) :
+    domicileT = map["domicile"],
+    exterieurT = map["exterieur"];
+
+  Rencontre.jeuxFromJson(Map map) :
+        domicileJ = map["domicile"],
+        exterieurJ = map["exterieur"];
+
+  Rencontre.horreurFromJson(Map map) :
+      domicileH = map["domicile"],
+      exterieurH = map["exterieur"];
+
+  Rencontre.seriesFromJson(Map map) :
+        domicileS = map["domicile"],
+        exterieurS = map["exterieur"];
+
+  Rencontre.seriesAnimesFromJson(Map map) :
+        domicileSA = map["domicile"],
+        exterieurSA = map["exterieur"];
+
   Rencontre.avengersFromJson(Map map) :
         domicileA = map["domicile"],
         exterieurA = map["exterieur"];
+
+  Rencontre.chansonFromJson(Map map) :
+      domicileC = map["domicile"],
+      exterieurC = map["exterieur"];
 
   Rencontre.mechantsFromJson(Map map) :
         domicileM = map["domicile"],

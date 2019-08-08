@@ -2,9 +2,11 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:choisi/model/avengers.dart';
 import 'package:choisi/model/chansons.dart';
+import 'package:choisi/model/disney.dart';
 import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/mechants.dart';
+import 'package:choisi/model/series.dart';
 import 'package:choisi/resultat.dart';
 import 'package:choisi/tableau.dart';
 import 'package:flutter/material.dart';
@@ -105,15 +107,24 @@ class _Match extends State<Match> {
         createWidgetsJeux(list);
         break;
       case 4 :
-        createWidgetsAvengers(list);
+        createWidgetsFilms(list);
         break;
       case 5 :
-        createWidgetsChansons(list);
+        createWidgetsSeries(list);
         break;
       case 6 :
-        createWidgetsMechants(list);
+        createWidgetsSeries(list);
         break;
       case 7 :
+        createWidgetsAvengers(list);
+        break;
+      case 8 :
+        createWidgetsChansons(list);
+        break;
+      case 9 :
+        createWidgetsMechants(list);
+        break;
+      case 10 :
         createWidgetsDisney(list);
         break;
     }
@@ -186,18 +197,30 @@ class _Match extends State<Match> {
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
         case 4 :
-          data = shared.getString("tourSuivant").split("Avengers")[1];
+          data = shared.getString("tourSuivant").split("Films")[1];
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
         case 5 :
-          data = shared.getString("tourSuivant").split("Chansons")[1];
+          data = shared.getString("tourSuivant").split("Series")[1];
           vainqueur = Chansons.fromJson(json.decode(data));
           break;
         case 6 :
-          data = shared.getString("tourSuivant").split("Mechants")[1];
+          data = shared.getString("tourSuivant").split("Series")[1];
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
         case 7 :
+          data = shared.getString("tourSuivant").split("Avengers")[1];
+          vainqueur = Jeux.fromJson(json.decode(data));
+          break;
+        case 8 :
+          data = shared.getString("tourSuivant").split("Chansons")[1];
+          vainqueur = Chansons.fromJson(json.decode(data));
+          break;
+        case 9 :
+          data = shared.getString("tourSuivant").split("Mechants")[1];
+          vainqueur = Jeux.fromJson(json.decode(data));
+          break;
+        case 10 :
           data = shared.getString("tourSuivant").split("Disney")[1];
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
@@ -238,16 +261,52 @@ class _Match extends State<Match> {
             }
             break;
           case 4 :
-            must = decoupe[i].split("Avengers")[1];
+            must = decoupe[i].split("Films")[1];
             try {
-              Avengers data = Avengers.fromJson(json.decode(must));
+              Films data = Films.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
             }
             break;
           case 5 :
+            must = decoupe[i].split("Series")[1];
+            try {
+              Series data = Series.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 6 :
+            must = decoupe[i].split("Series")[1];
+            try {
+              Series data = Series.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 7 :
+            must = decoupe[i].split("Avengers")[1];
+            try {
+              Mechants data = Mechants.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 8 :
             must = decoupe[i].split("Chansons")[1];
+            try {
+              Disney data = Disney.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 9 :
+            must = decoupe[i].split("Mechants")[1];
             try {
               Chansons data = Chansons.fromJson(json.decode(must));
               listeT.add(data);
@@ -255,10 +314,10 @@ class _Match extends State<Match> {
               print(e);
             }
             break;
-          case 6 :
-            must = decoupe[i].split("Mechants")[1];
+          case 10 :
+            must = decoupe[i].split("Disney")[1];
             try {
-              Mechants data = Mechants.fromJson(json.decode(must));
+              Disney data = Disney.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
@@ -781,6 +840,61 @@ class _Match extends State<Match> {
                 )
               ],
             )
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(exterieur);
+      },
+    );
+    list.add(widget1);
+    list.add(widget2);
+  }
+
+  createWidgetsSeries(List<Widget> list) {
+    Widget widget1 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.white,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            CachedNetworkImage(
+              imageUrl: domicile.image,
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.width/2,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context,url,error) => new Icon(Icons.error),
+            ),
+            Text("Année de début : ${domicile.anneeDebut}", style: TextStyle(fontFamily: 'Lemon'),),
+            Text("Année de fin : ${domicile.anneeFin}", style: TextStyle(fontFamily: 'Lemon'),),
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(domicile);
+      },
+    );
+    Widget widget2 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.teal,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            CachedNetworkImage(
+              imageUrl: exterieur.image,
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.width/2,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context,url,error) => new Icon(Icons.error),
+            ),
+            Text("Année de début : ${exterieur.anneeDebut}", style: TextStyle(fontFamily: 'Lemon'),),
+            Text("Année de fin : ${exterieur.anneeFin}", style: TextStyle(fontFamily: 'Lemon'),),
           ],
         ),
       ),

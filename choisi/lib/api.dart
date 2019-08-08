@@ -56,6 +56,27 @@ class API {
     });
   }
 
+  static Future getSeriesAnimes(String token) {
+    var url = urlServeur + "/seriesanimes";
+    return http.get(url, headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    });
+  }
+
+  static Future getSeries(String token) {
+    var url = urlServeur + "/series";
+    return http.get(url,  headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    });
+  }
+
+  static Future getHorreurs(String token) {
+    var url = urlServeur + "/horreur";
+    return http.get(url, headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    });
+  }
+
   static Future getToken() async {
     var url = urlServeur + "/token";
     Map data = {

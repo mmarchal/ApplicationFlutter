@@ -6,6 +6,7 @@ import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/avengers.dart';
 import 'package:choisi/model/mechants.dart';
+import 'package:choisi/model/series.dart';
 import 'package:choisi/model/tournoi.dart';
 import 'package:choisi/tableau.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,10 @@ class _Menu extends State<Menu> {
   var avengers = new List<Avengers>();
   var mechants = new List<Mechants>();
   var disney = new List<Disney>();
+  var horreur = new List<Films>();
+  var series = new List<Series>();
+  var seriesAnimes = new List<Series>();
+
   var rencontresId = new List<int>();
   var mapRencontres = new List<Map>();
 
@@ -44,6 +49,24 @@ class _Menu extends State<Menu> {
   }
 
   _getAll() {
+    API.getHorreurs(widget.token).then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        horreur = list.map((hor) => Films.fromJson(hor)).toList();
+      });
+    });
+    API.getSeries(widget.token).then((response){
+      setState(() {
+        Iterable list = json.decode(response.body);
+        series = list.map((serie) => Series.fromJson(serie)).toList();
+      });
+    });
+    API.getSeriesAnimes(widget.token).then((response){
+      setState(() {
+        Iterable list = json.decode(response.body);
+        seriesAnimes = list.map((serie) => Series.fromJson(serie)).toList();
+      });
+    });
     API.getUsers(widget.token).then((response) {
       setState(() {
         Iterable list = json.decode(response.body);
@@ -101,7 +124,7 @@ class _Menu extends State<Menu> {
     shared.setInt("id", 0);
     for(int i=0; i<list.length; i=i+2) {
       Map map = new Map();
-      switch (nb) {
+      switch (nb) { //a modifier car ajout nouveaux boutons
         case 1 :
           map = {
             "domicile" : films[list[i]],
@@ -122,23 +145,41 @@ class _Menu extends State<Menu> {
           break;
         case 4 :
           map = {
+            "domicile" : horreur[list[i]],
+            "exterieur" : horreur[list[i+1]]
+          };
+          break;
+        case 5 :
+          map = {
+            "domicile" : series[list[i]],
+            "exterieur" : series[list[i+1]]
+          };
+          break;
+        case 6 :
+          map = {
+            "domicile" : seriesAnimes[list[i]],
+            "exterieur" : seriesAnimes[list[i+1]]
+          };
+          break;
+        case 7 :
+          map = {
             "domicile" : avengers[list[i]],
             "exterieur" : avengers[list[i+1]]
           };
           break;
-        case 5 :
+        case 8 :
           map = {
             "domicile" : chansons[list[i]],
             "exterieur" : chansons[list[i+1]]
           };
           break;
-        case 6 :
+        case 9 :
           map = {
             "domicile" : mechants[list[i]],
             "exterieur" : mechants[list[i+1]]
           };
           break;
-        case 7 :
+        case 10 :
           map = {
             "domicile" : disney[list[i]],
             "exterieur" : disney[list[i+1]]
@@ -170,7 +211,7 @@ class _Menu extends State<Menu> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text("Les tournois de Sofyan", style: TextStyle(fontFamily: 'Disney'),),
+                          Text("Les tournois de Sofyan", textScaleFactor: 1.5, style: TextStyle(fontFamily: 'Disney'),),
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,37 +227,23 @@ class _Menu extends State<Menu> {
                                       )
                                   )
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Container(
-                                    width: MediaQuery.of(context).size.width /2.5,
-                                    child: RaisedButton(
-                                      onPressed: () {
-                                        checkDatasInRealisateur(1, realisateurs);
-                                      },
-                                      child: new Text("Films", style: TextStyle(fontFamily: 'Disney'),),
-                                    ),
-                                    margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
+                              Container(
+                                height: MediaQuery.of(context).size.height/3.5,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      containerBouton(1, films, "Films"),
+                                      containerBouton(2, realisateurs, "Réalisateurs"),
+                                      containerBouton(3, jeux, "Jeux Vidéos"),
+                                      containerBouton(4, horreur, "Films d'horreur"),
+                                      containerBouton(5, series, "Séries"),
+                                      containerBouton(6, seriesAnimes, "Séries Animés")
+                                    ],
                                   ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width /2.5,
-                                    child: RaisedButton(
-                                      onPressed: () {checkDatasInRealisateur(2, realisateurs);},
-                                      child: new Text("Réalisateur", style: TextStyle(fontFamily: 'Disney'),),
-                                    ),
-                                    margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
-                                  ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width /2.5,
-                                    child: RaisedButton(
-                                      onPressed: () {checkDatasInRealisateur(3, jeux);},
-                                      child: new Text("Jeux vidéos", style: TextStyle(fontFamily: 'Disney'),),
-                                    ),
-                                    margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
-                                  ),
-                                ],
+                                )
                               )
                             ],
                           ),
@@ -235,55 +262,25 @@ class _Menu extends State<Menu> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        new Text("Les autres tournois", style: TextStyle(fontFamily: 'Disney'),),
+                        new Text("Les autres tournois", textScaleFactor: 1.5, style: TextStyle(fontFamily: 'Disney'),),
                         new Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Container(
-                                  width: MediaQuery.of(context).size.width /2.5,
-                                  child: RaisedButton(
-                                    onPressed: () {
-                                      checkDatasInRealisateur(4, avengers);
-                                    },
-                                    child: new Text("Avengers", style: TextStyle(fontFamily: 'Disney'),),
-                                  ),
-                                  margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
+                            Container(
+                              height: MediaQuery.of(context).size.height/3.5,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    containerBouton(7, avengers, "Avengers"),
+                                    containerBouton(8, chansons, "Chansons Disney"),
+                                    containerBouton(9, mechants, "Méchants"),
+                                    containerBouton(10, disney, "Films Disney")
+                                  ],
                                 ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width /2.5,
-                                  child: RaisedButton(
-                                    onPressed: () {
-                                      checkDatasInRealisateur(5, chansons);
-                                    },
-                                    child: new Text("Chansons Disney", textScaleFactor: 0.9, style: TextStyle(fontFamily: 'Disney'),),
-                                  ),
-                                  margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width /2.5,
-                                  child: RaisedButton(
-                                    onPressed: () {
-                                      checkDatasInRealisateur(6, mechants);
-                                    },
-                                    child: new Text("Méchants", style: TextStyle(fontFamily: 'Disney'),),
-                                  ),
-                                  margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
-                                ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width /2.5,
-                                  child: RaisedButton(
-                                    onPressed: () {
-                                      checkDatasInRealisateur(7, disney);
-                                    },
-                                    child: new Text("Films Disney", style: TextStyle(fontFamily: 'Disney'),),
-                                  ),
-                                  margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
-                                ),
-                              ],
+                              ),
                             ),
                             Container(
                                 width: 150.0,
@@ -315,5 +312,18 @@ class _Menu extends State<Menu> {
         ),
       );
     }
+  }
+
+  containerBouton(int id, List list, String nom ) {
+    return Container(
+      width: MediaQuery.of(context).size.width /2.5,
+      child: RaisedButton(
+        onPressed: () {
+          checkDatasInRealisateur(id, list);
+        },
+        child: new Text(nom, style: TextStyle(fontFamily: 'Disney'), textAlign: TextAlign.center,),
+      ),
+      margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
+    );
   }
 }
