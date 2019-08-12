@@ -7,6 +7,7 @@ import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/mechants.dart';
 import 'package:choisi/model/series.dart';
+import 'package:choisi/model/sports.dart';
 import 'package:choisi/model/tournoi.dart';
 import 'package:flutter/material.dart';
 
@@ -95,6 +96,11 @@ class _Tableau extends State<Tableau> {
           Rencontre rencontre = Rencontre.disneyFromJson(test);
           listeDomicile.add(rencontre.domicileD);
           listeExterieur.add(rencontre.exterieurD);
+          break;
+        case 11 :
+          Rencontre rencontre = Rencontre.sportsFromJson(test);
+          listeDomicile.add(rencontre.domicileSp);
+          listeExterieur.add(rencontre.exterieurSp);
           break;
       }
     });
@@ -205,6 +211,7 @@ class Rencontre {
   Chansons domicileC, exterieurC;
   Mechants domicileM, exterieurM;
   Disney domicileD, exterieurD;
+  Sports domicileSp, exterieurSp;
 
   Rencontre.filmsFromJson(Map map) :
         domicileF = map["domicile"],
@@ -245,4 +252,8 @@ class Rencontre {
   Rencontre.disneyFromJson(Map map) :
         domicileD = map["domicile"],
         exterieurD = map["exterieur"];
+
+  Rencontre.sportsFromJson(Map map) :
+      domicileSp = map["domicile"],
+      exterieurSp = map["exterieur"];
 }

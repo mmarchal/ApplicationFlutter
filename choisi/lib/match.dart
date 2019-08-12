@@ -7,6 +7,7 @@ import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/mechants.dart';
 import 'package:choisi/model/series.dart';
+import 'package:choisi/model/sports.dart';
 import 'package:choisi/resultat.dart';
 import 'package:choisi/tableau.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +105,7 @@ class _Match extends State<Match> {
         createWidgetsRealisateur(list);
         break;
       case 3 :
-        createWidgetsJeux(list);
+        createWidgetsJeuxOrSports(list);
         break;
       case 4 :
         createWidgetsFilms(list);
@@ -126,6 +127,9 @@ class _Match extends State<Match> {
         break;
       case 10 :
         createWidgetsDisney(list);
+        break;
+      case 11 :
+        createWidgetsJeuxOrSports(list);
         break;
     }
     return list;
@@ -224,6 +228,10 @@ class _Match extends State<Match> {
           data = shared.getString("tourSuivant").split("Disney")[1];
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
+        case 11 :
+          data = shared.getString("tourSuivant").split("Sports")[1];
+          vainqueur = Sports.fromJson(json.decode(data));
+          break;
       }
       Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bContext){
         return new Resultat(vainqueur: vainqueur,);
@@ -290,7 +298,7 @@ class _Match extends State<Match> {
           case 7 :
             must = decoupe[i].split("Avengers")[1];
             try {
-              Mechants data = Mechants.fromJson(json.decode(must));
+              Avengers data = Avengers.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
@@ -299,7 +307,7 @@ class _Match extends State<Match> {
           case 8 :
             must = decoupe[i].split("Chansons")[1];
             try {
-              Disney data = Disney.fromJson(json.decode(must));
+              Chansons data = Chansons.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
@@ -308,7 +316,7 @@ class _Match extends State<Match> {
           case 9 :
             must = decoupe[i].split("Mechants")[1];
             try {
-              Chansons data = Chansons.fromJson(json.decode(must));
+              Mechants data = Mechants.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
@@ -318,6 +326,15 @@ class _Match extends State<Match> {
             must = decoupe[i].split("Disney")[1];
             try {
               Disney data = Disney.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 11 :
+            must = decoupe[i].split("Sports")[1];
+            try {
+              Sports data = Sports.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
@@ -434,7 +451,7 @@ class _Match extends State<Match> {
     list.add(widget2);
   }
 
-  void createWidgetsJeux(List<Widget> list) {
+  void createWidgetsJeuxOrSports(List<Widget> list) {
     Widget widget1 = new InkWell(
       child: new Container(
         width: MediaQuery.of(context).size.width,
@@ -851,7 +868,7 @@ class _Match extends State<Match> {
     list.add(widget2);
   }
 
-  createWidgetsSeries(List<Widget> list) {
+  void createWidgetsSeries(List<Widget> list) {
     Widget widget1 = new InkWell(
       child: new Container(
         width: MediaQuery.of(context).size.width,
@@ -905,5 +922,6 @@ class _Match extends State<Match> {
     list.add(widget1);
     list.add(widget2);
   }
+
 }
 

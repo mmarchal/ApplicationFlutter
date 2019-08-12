@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:choisi/model/ApiResponse.dart';
 import 'package:http/http.dart' as http;
 
-const urlServeur = "http://appliraspberry.ddns.net:8080";
+const urlServeur = "http://appliraspberry.ddns.net:8181";
 
 class API {
   static Future getUsers(String token) {
@@ -72,6 +72,13 @@ class API {
 
   static Future getHorreurs(String token) {
     var url = urlServeur + "/horreur";
+    return http.get(url, headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    });
+  }
+
+  static Future getSports(String token) {
+    var url = urlServeur + "/sports";
     return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
     });
