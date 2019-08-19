@@ -6,6 +6,7 @@ import 'package:choisi/model/disney.dart';
 import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/mechants.dart';
+import 'package:choisi/model/sagas.dart';
 import 'package:choisi/model/series.dart';
 import 'package:choisi/model/sports.dart';
 import 'package:choisi/resultat.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'model/tournoi.dart';
 import 'dart:convert';
+import 'package:xml/xml.dart' as xml;
 
 class Match extends StatefulWidget {
 
@@ -43,6 +45,9 @@ class _Match extends State<Match> {
 
   AudioPlayer audioPlayerD = new AudioPlayer();
   AudioPlayer audioPlayerE = new AudioPlayer();
+  
+  List<String> contenusDatasD = new List();
+  List<String> contenusDatasE = new List();
 
   @override
   void initState() {
@@ -130,6 +135,9 @@ class _Match extends State<Match> {
         break;
       case 11 :
         createWidgetsJeuxOrSports(list);
+        break;
+      case 12 :
+        createWidgetsSagas(list);
         break;
     }
     return list;
@@ -231,6 +239,10 @@ class _Match extends State<Match> {
         case 11 :
           data = shared.getString("tourSuivant").split("Sports")[1];
           vainqueur = Sports.fromJson(json.decode(data));
+          break;
+        case 12 :
+          data = shared.getString("tourSuivant").split("Sagas")[1];
+          vainqueur = Sagas.fromJson(json.decode(data));
           break;
       }
       Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bContext){
@@ -335,6 +347,15 @@ class _Match extends State<Match> {
             must = decoupe[i].split("Sports")[1];
             try {
               Sports data = Sports.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 12 :
+            must = decoupe[i].split("Sagas")[1];
+            try {
+              Sagas data = Sagas.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
@@ -912,6 +933,59 @@ class _Match extends State<Match> {
             ),
             Text("Année de début : ${exterieur.anneeDebut}", style: TextStyle(fontFamily: 'Lemon'),),
             Text("Année de fin : ${exterieur.anneeFin}", style: TextStyle(fontFamily: 'Lemon'),),
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(exterieur);
+      },
+    );
+    list.add(widget1);
+    list.add(widget2);
+  }
+
+  void createWidgetsSagas(List<Widget> list) {
+    Widget widget1 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.orange.shade200,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            CachedNetworkImage(
+              imageUrl: domicile.image,
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.width/2,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context,url,error) => new Icon(Icons.error),
+            ),
+            new Text("Nombre de films : ${domicile.nombreFilms.toString()}", style: TextStyle(fontFamily: 'Lemon'),)
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(domicile);
+      },
+    );
+    Widget widget2 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.teal.shade600,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            CachedNetworkImage(
+              imageUrl: exterieur.image,
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.width/2,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context,url,error) => new Icon(Icons.error),
+            ),
+            new Text("Nombre de films : ${exterieur.nombreFilms.toString()}", style: TextStyle(fontFamily: 'Lemon'),)
           ],
         ),
       ),

@@ -6,6 +6,7 @@ import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/avengers.dart';
 import 'package:choisi/model/mechants.dart';
+import 'package:choisi/model/sagas.dart';
 import 'package:choisi/model/series.dart';
 import 'package:choisi/model/sports.dart';
 import 'package:choisi/model/tournoi.dart';
@@ -38,6 +39,7 @@ class _Menu extends State<Menu> {
   var series = new List<Series>();
   var seriesAnimes = new List<Series>();
   var sports = new List<Sports>();
+  var sagas = new List<Sagas>();
 
   var rencontresId = new List<int>();
   var mapRencontres = new List<Map>();
@@ -115,6 +117,12 @@ class _Menu extends State<Menu> {
       setState(() {
         Iterable list = json.decode(response.body);
         sports = list.map((sport) => Sports.fromJson(sport)).toList();
+      });
+    });
+    API.getSagas(widget.token).then((response){
+      setState(() {
+        Iterable list = json.decode(response.body);
+        sagas = list.map((saga) => Sagas.fromJson(saga)).toList();
       });
     });
     isFinish = true;
@@ -197,6 +205,12 @@ class _Menu extends State<Menu> {
           map = {
             "domicile" : sports[list[i]],
             "exterieur" : sports[list[i+1]]
+          };
+          break;
+        case 12 :
+          map = {
+            "domicile" : sagas[list[i]],
+            "exterieur" : sagas[list[i+1]]
           };
           break;
       }
@@ -292,7 +306,8 @@ class _Menu extends State<Menu> {
                                     containerBouton(8, chansons, "Chansons Disney"),
                                     containerBouton(9, mechants, "Méchants"),
                                     containerBouton(10, disney, "Films Disney"),
-                                    containerBouton(11, sports, "Sports")
+                                    containerBouton(11, sports, "Sports"),
+                                    containerBouton(12, sagas, "Sagas")
                                   ],
                                 ),
                               ),

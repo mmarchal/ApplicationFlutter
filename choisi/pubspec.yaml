@@ -31,6 +31,7 @@ dependencies:
   cached_network_image: ^1.1.0
   audioplayers: any
   flutter_launcher_icons: any
+  xml: ^3.5.0
 
 dev_dependencies:
   flutter_test:

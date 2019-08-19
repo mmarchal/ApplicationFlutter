@@ -84,6 +84,13 @@ class API {
     });
   }
 
+  static Future getSagas(String token) {
+    var url = urlServeur + "/saga";
+    return http.get(url, headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    });
+  }
+
   static Future getToken() async {
     var url = urlServeur + "/token";
     Map data = {
