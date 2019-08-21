@@ -2,9 +2,12 @@ import 'dart:async';
 import 'package:choisi/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:choisi/api.dart';
+import 'package:xml/xml.dart' as xml;
+
 
 void main() {
   List<DeviceOrientation> values = [DeviceOrientation.portraitUp];
@@ -38,6 +41,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   String token;
+  var logger = Logger();
 
   @override
   void initState() {

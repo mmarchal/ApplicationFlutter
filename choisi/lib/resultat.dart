@@ -8,8 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Resultat extends StatefulWidget {
 
   final vainqueur;
+  final id;
 
-  Resultat({Key key, this.vainqueur}) : super(key: key);
+  Resultat({Key key, this.vainqueur, this.id}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -42,7 +43,7 @@ class _Resultat extends State<Resultat> {
                 placeholder: (context,url) => CircularProgressIndicator(),
                 errorWidget: (context,url,error) => new Icon(Icons.error),
               ),
-              new Text("Le grand gagnant est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),),
+              textInFunctionId(widget.id),
               new RaisedButton(
                 child: new Text("Retourner au menu", textScaleFactor: 2.0,),
                   onPressed: () async {
@@ -68,6 +69,47 @@ class _Resultat extends State<Resultat> {
         ) /* add child content here */,
       ),
     );
+  }
+
+  Widget textInFunctionId(id) {
+    switch (id) {
+      case 1 :
+        return new Text("Votre film préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 2 :
+        return new Text("Votre réalisateur préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 3 :
+        return new Text("Votre jeu vidéo préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 4 :
+        return new Text("Votre film d'horreur préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 5 :
+        return new Text("Votre série préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 6 :
+        return new Text("Votre série animé préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 7 :
+        return new Text("Votre Avengers préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 8 :
+        return new Text("Votre chanson Disney préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 9 :
+        return new Text("Votre méchant de film préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 10 :
+        return new Text("Votre film Disney préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 11 :
+        return new Text("Votre sport préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 12 :
+        return new Text("Votre saga de film préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+    }
   }
 
 }

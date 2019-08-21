@@ -3,7 +3,7 @@ class Sagas {
   String id;
   String nom;
   String image;
-  int nombreFilms;
+  String nombreFilms;
   String contenu;
 
   @override
@@ -38,15 +38,4 @@ class Sagas {
         image = json['image'],
         nombreFilms = json['nombreFilms'],
         contenu = json['contenu'];
-}
-
-class Contenu {
-  String id;
-  String nomFilm;
-  String dateSortieFilm;
-
-  Contenu.fromJson(Map json) :
-        id = json['id'].toString(),
-        nomFilm = json['nomFilm'],
-        dateSortieFilm = json['dateSortieFilm'];
 }
