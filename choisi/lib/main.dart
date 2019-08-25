@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:choisi/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +7,16 @@ import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:choisi/api.dart';
-import 'package:xml/xml.dart' as xml;
+import 'package:choisi/model/chansons.dart';
+import 'package:choisi/model/disney.dart';
+import 'package:choisi/model/films.dart';
+import 'package:choisi/model/jeux.dart';
+import 'package:choisi/model/avengers.dart';
+import 'package:choisi/model/mechants.dart';
+import 'package:choisi/model/sagas.dart';
+import 'package:choisi/model/series.dart';
+import 'package:choisi/model/sports.dart';
+import 'package:choisi/model/tournoi.dart';
 
 
 void main() {
@@ -41,19 +51,168 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   String token;
-  var logger = Logger();
+
+  var films = new List<Films>();
+  var realisateurs = new List<Tournoi>();
+  var chansons = new List<Chansons>();
+  var jeux = new List<Jeux>();
+  var avengers = new List<Avengers>();
+  var mechants = new List<Mechants>();
+  var disney = new List<Disney>();
+  var horreur = new List<Films>();
+  var series = new List<Series>();
+  var seriesAnimes = new List<Series>();
+  var sports = new List<Sports>();
+  var sagas = new List<Sagas>();
+
+  var logg = new Logger();
+  var diviseur = 100/12;
+  var erreur;
+
+  bool allIsFinish = false;
 
   @override
   void initState() {
     super.initState();
     API.getToken().then((value) {
-      if(value.status==200) {
+      try {
+        if(value.status==200) {
+          setState(() {
+            token = value.result.token;
+            allIsFinish = true;
+          });
+          _getAll();
+        }
+      } on Error catch(e) {
+        print(e.stackTrace);
         setState(() {
-          token = value.result.token;
+          erreur = e;
         });
-      } else {
-        print("${value.status} : ${value.message}");
+        showErrorDialog();
       }
+    });
+  }
+
+  _getAll() {
+    API.getMovies(token).then((response) {
+      setState(() {
+        try {
+          Iterable list = json.decode(response.body);
+          films = list.map((film) => Films.fromJson(film)).toList();
+        } on NoSuchMethodError catch (e) {
+          logg.i(e.toString());
+        }
+      });
+    });
+    API.getUsers(token).then((response) {
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          realisateurs = list.map((model) => Tournoi.fromJson(model)).toList();
+        }
+      });
+    });
+    API.getGames(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          jeux = list.map((jeu) => Jeux.fromJson(jeu)).toList();
+        }
+      });
+    });
+    API.getHorreurs(token).then((response) {
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          horreur = list.map((hor) => Films.fromJson(hor)).toList();
+        }
+      });
+    });
+    API.getSeries(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          series = list.map((serie) => Series.fromJson(serie)).toList();
+        }
+      });
+    });
+    API.getSeriesAnimes(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          seriesAnimes = list.map((serie) => Series.fromJson(serie)).toList();
+        }
+      });
+    });
+    API.getAvengers(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          avengers = list.map((heros) => Avengers.fromJson(heros)).toList();
+        }
+      });
+    });
+    API.getSongs(token).then((response) {
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          chansons = list.map((model) => Chansons.fromJson(model)).toList();
+        }
+      });
+    });
+    API.getMechants(token).then((response) {
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          mechants = list.map((mechant) => Mechants.fromJson(mechant)).toList();
+        }
+      });
+    });
+    API.getDisney(token).then((response) {
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          disney = list.map((disneyF) => Disney.fromJson(disneyF)).toList();
+        }
+      });
+    });
+    API.getSports(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          sports = list.map((sport) => Sports.fromJson(sport)).toList();
+        }
+      });
+    });
+    API.getSagas(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          sagas = list.map((saga) => Sagas.fromJson(saga)).toList();
+        }
+      });
     });
   }
 
@@ -119,22 +278,53 @@ InkWell imageLogo(String image, String url) {
             ),
             //new CircularProgressIndicator(),
             Padding(padding: EdgeInsets.all(20.0),),
-            RaisedButton(
-              onPressed: () {
-                changePage();
-                //_showDialog();
-              },
-              child: new Text(
-                "Aller au menu",
-                textScaleFactor: 2.0,
-                style: new TextStyle(
-                    fontFamily: 'Brushield'
+            Container(
+              child: Visibility(
+                visible: !allIsFinish,
+                child: CircularProgressIndicator()
+              ),
+            ),
+            Visibility(
+              visible: allIsFinish,
+              child: RaisedButton(
+                onPressed: () {
+                  changePage();
+                  //_showDialog();
+                },
+                child: new Text(
+                  "Aller au menu",
+                  textScaleFactor: 2.0,
+                  style: new TextStyle(
+                      fontFamily: 'Brushield'
+                  ),
                 ),
               ),
             )
           ],
         ),
       ),
+    );
+  }
+
+  Widget showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Erreur de serveur"),
+          content: new Text("Impossible d'accéder aux données\n$erreur"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("OK, recharger la page !"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

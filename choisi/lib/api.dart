@@ -9,15 +9,21 @@ const urlServeur = "http://appliraspberry.ddns.net:8181";
 class API {
   static Future getUsers(String token) {
     var url = urlServeur + "/realisateur";
-    return http.get(url,  headers: {
+    return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
   static Future getSongs(String token) {
     var url = urlServeur + "/chanson";
-    return http.get(url,  headers: {
+    return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
@@ -25,13 +31,19 @@ class API {
     var url = urlServeur + "/dessinsanimes";
     return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
   static Future getGames(String token) {
     var url = urlServeur + "/jeuxvideos";
-    return http.get(url,  headers: {
+    return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
@@ -39,13 +51,19 @@ class API {
     var url = urlServeur + "/films";
     return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
   static Future getAvengers(String token) {
     var url = urlServeur + "/avengers";
-    return http.get(url,  headers: {
+    return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
@@ -53,6 +71,9 @@ class API {
     var url = urlServeur + "/mechants";
     return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
@@ -60,13 +81,19 @@ class API {
     var url = urlServeur + "/seriesanimes";
     return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
   static Future getSeries(String token) {
     var url = urlServeur + "/series";
-    return http.get(url,  headers: {
+    return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
@@ -74,6 +101,9 @@ class API {
     var url = urlServeur + "/horreur";
     return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
@@ -81,6 +111,9 @@ class API {
     var url = urlServeur + "/sports";
     return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
@@ -88,6 +121,9 @@ class API {
     var url = urlServeur + "/saga";
     return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
     });
   }
 
@@ -100,11 +136,21 @@ class API {
     //encode Map to JSON
     var body = json.encode(data);
 
-    var response = await http.post(url,
-        headers: {"Content-Type": "application/json"},
-        body: body
-    );
-    var apiResponse = ApiResponse.fromJson(jsonDecode(response.body));
-    return apiResponse;
+    try {
+      var response = await http.post(url,
+          headers: {"Content-Type": "application/json"},
+          body: body
+      );
+      if (response.statusCode==200){
+        var apiResponse = ApiResponse.fromJson(jsonDecode(response.body));
+        return apiResponse;
+      } else {
+        return null;
+      }
+    } on SocketException catch (e) {
+      print(e.message);
+      return null;
+    }
+
   }
 }
