@@ -195,6 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
     API.getSports(token).then((response){
+      print(response.body);
       setState(() {
         if(response.body == null) {
           logg.i("Erreur");
@@ -236,7 +237,7 @@ InkWell imageLogo(String image, String url) {
     var shared = await SharedPreferences.getInstance();
     shared.setString("tourSuivant", "");
     Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bContext){
-      return new Menu(token: token,);
+      return new Menu(token: token, films: films, realisateurs: realisateurs,chansons: chansons, jeux: jeux, avengers: avengers, mechants: mechants, disney: disney, horreur: horreur, series: series, seriesAnimes: seriesAnimes, sports: sports, sagas: sagas,);
     }));
   }
 
