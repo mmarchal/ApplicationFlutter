@@ -9,6 +9,7 @@ import 'package:choisi/model/mechants.dart';
 import 'package:choisi/model/sagas.dart';
 import 'package:choisi/model/series.dart';
 import 'package:choisi/model/sports.dart';
+import 'package:choisi/model/superheros.dart';
 import 'package:choisi/model/tournoi.dart';
 import 'package:flutter/material.dart';
 
@@ -79,31 +80,36 @@ class _Tableau extends State<Tableau> {
           listeExterieur.add(rencontre.exterieurSA);
           break;
         case 7 :
+          Rencontre rencontre = Rencontre.superHerosFromJson(test);
+          listeDomicile.add(rencontre.domicileSh);
+          listeExterieur.add(rencontre.exterieurSh);
+          break;
+        case 8 :
           Rencontre rencontre = Rencontre.avengersFromJson(test);
           listeDomicile.add(rencontre.domicileA);
           listeExterieur.add(rencontre.exterieurA);
           break;
-        case 8 :
+        case 9 :
           Rencontre rencontre = Rencontre.chansonFromJson(test);
           listeDomicile.add(rencontre.domicileC);
           listeExterieur.add(rencontre.exterieurC);
           break;
-        case 9 :
+        case 10 :
           Rencontre rencontre = Rencontre.mechantsFromJson(test);
           listeDomicile.add(rencontre.domicileM);
           listeExterieur.add(rencontre.exterieurM);
           break;
-        case 10 :
+        case 11 :
           Rencontre rencontre = Rencontre.disneyFromJson(test);
           listeDomicile.add(rencontre.domicileD);
           listeExterieur.add(rencontre.exterieurD);
           break;
-        case 11 :
+        case 12 :
           Rencontre rencontre = Rencontre.sportsFromJson(test);
           listeDomicile.add(rencontre.domicileSp);
           listeExterieur.add(rencontre.exterieurSp);
           break;
-        case 12 :
+        case 13 :
           Rencontre rencontre = Rencontre.sagasFromJson(test);
           listeDomicile.add(rencontre.domicileSa);
           listeExterieur.add(rencontre.exterieurSa);
@@ -219,6 +225,8 @@ class Rencontre {
   Disney domicileD, exterieurD;
   Sports domicileSp, exterieurSp;
   Sagas domicileSa, exterieurSa;
+  SuperHeros domicileSh, exterieurSh;
+
 
   Rencontre.filmsFromJson(Map map) :
         domicileF = map["domicile"],
@@ -243,6 +251,10 @@ class Rencontre {
   Rencontre.seriesAnimesFromJson(Map map) :
         domicileSA = map["domicile"],
         exterieurSA = map["exterieur"];
+
+  Rencontre.superHerosFromJson(Map map) :
+        domicileSh = map["domicile"],
+        exterieurSh = map["exterieur"];
 
   Rencontre.avengersFromJson(Map map) :
         domicileA = map["domicile"],

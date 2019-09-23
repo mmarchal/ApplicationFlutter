@@ -9,6 +9,7 @@ import 'package:choisi/model/mechants.dart';
 import 'package:choisi/model/sagas.dart';
 import 'package:choisi/model/series.dart';
 import 'package:choisi/model/sports.dart';
+import 'package:choisi/model/superheros.dart';
 import 'package:choisi/resultat.dart';
 import 'package:choisi/tableau.dart';
 import 'package:flutter/material.dart';
@@ -124,21 +125,24 @@ class _Match extends State<Match> {
         createWidgetsSeries(list);
         break;
       case 7 :
-        createWidgetsAvengers(list);
+        createWidgetsSuperHeros(list);
         break;
       case 8 :
-        createWidgetsChansons(list);
+        createWidgetsAvengers(list);
         break;
       case 9 :
-        createWidgetsMechants(list);
+        createWidgetsChansons(list);
         break;
       case 10 :
-        createWidgetsDisney(list);
+        createWidgetsMechants(list);
         break;
       case 11 :
-        createWidgetsJeuxOrSports(list);
+        createWidgetsDisney(list);
         break;
       case 12 :
+        createWidgetsJeuxOrSports(list);
+        break;
+      case 13 :
         createWidgetsSagas(list);
         break;
     }
@@ -230,26 +234,30 @@ class _Match extends State<Match> {
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
         case 7 :
+          data = shared.getString("tourSuivant").split("SuperHeros")[1];
+          vainqueur = SuperHeros.fromJson(json.decode(data));
+          break;
+        case 8 :
           data = shared.getString("tourSuivant").split("Avengers")[1];
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
-        case 8 :
+        case 9 :
           data = shared.getString("tourSuivant").split("Chansons")[1];
           vainqueur = Chansons.fromJson(json.decode(data));
           break;
-        case 9 :
+        case 10 :
           data = shared.getString("tourSuivant").split("Mechants")[1];
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
-        case 10 :
+        case 11 :
           data = shared.getString("tourSuivant").split("Disney")[1];
           vainqueur = Jeux.fromJson(json.decode(data));
           break;
-        case 11 :
+        case 12 :
           data = shared.getString("tourSuivant").split("Sports")[1];
           vainqueur = Sports.fromJson(json.decode(data));
           break;
-        case 12 :
+        case 13 :
           data = shared.getString("tourSuivant").split("Sagas")[1];
           vainqueur = Sagas.fromJson(json.decode(data));
           break;
@@ -317,6 +325,15 @@ class _Match extends State<Match> {
             }
             break;
           case 7 :
+            must = decoupe[i].split("SuperHeros")[1];
+            try {
+              SuperHeros data = SuperHeros.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 8 :
             must = decoupe[i].split("Avengers")[1];
             try {
               Avengers data = Avengers.fromJson(json.decode(must));
@@ -325,7 +342,7 @@ class _Match extends State<Match> {
               print(e);
             }
             break;
-          case 8 :
+          case 9 :
             must = decoupe[i].split("Chansons")[1];
             try {
               Chansons data = Chansons.fromJson(json.decode(must));
@@ -334,7 +351,7 @@ class _Match extends State<Match> {
               print(e);
             }
             break;
-          case 9 :
+          case 10 :
             must = decoupe[i].split("Mechants")[1];
             try {
               Mechants data = Mechants.fromJson(json.decode(must));
@@ -343,7 +360,7 @@ class _Match extends State<Match> {
               print(e);
             }
             break;
-          case 10 :
+          case 11 :
             must = decoupe[i].split("Disney")[1];
             try {
               Disney data = Disney.fromJson(json.decode(must));
@@ -352,7 +369,7 @@ class _Match extends State<Match> {
               print(e);
             }
             break;
-          case 11 :
+          case 12 :
             must = decoupe[i].split("Sports")[1];
             try {
               Sports data = Sports.fromJson(json.decode(must));
@@ -361,7 +378,7 @@ class _Match extends State<Match> {
               print(e);
             }
             break;
-          case 12 :
+          case 13 :
             try {
               Sagas data = Sagas.fromJson(json.decode(decoupe[i]));
               listeT.add(data);
@@ -1051,6 +1068,59 @@ class _Match extends State<Match> {
               );
             })
     );
+  }
+
+  void createWidgetsSuperHeros(List<Widget> list) {
+    Widget widget1 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.lightGreen,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            CachedNetworkImage(
+              imageUrl: domicile.image,
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.width/2,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context,url,error) => new Icon(Icons.error),
+            ),
+            Text("Pouvoir : ${domicile.pouvoir}", style: TextStyle(fontFamily: 'Lemon'),),
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(domicile);
+      },
+    );
+    Widget widget2 = new InkWell(
+      child: new Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/2,
+        color: Colors.blue.shade200,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
+            CachedNetworkImage(
+              imageUrl: exterieur.image,
+              width: MediaQuery.of(context).size.width/2,
+              height: MediaQuery.of(context).size.width/2,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context,url,error) => new Icon(Icons.error),
+            ),
+            Text("Pouvoir : ${exterieur.pouvoir}", style: TextStyle(fontFamily: 'Lemon'),),
+          ],
+        ),
+      ),
+      onTap: () {
+        realChoisi(exterieur);
+      },
+    );
+    list.add(widget1);
+    list.add(widget2);
   }
 
 }
