@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:choisi/api.dart';
+import 'package:choisi/main.dart';
+import 'package:choisi/model/superheros.dart';
 import 'package:choisi/tableau.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +33,7 @@ class Menu extends StatefulWidget {
   var seriesAnimes = new List<Series>();
   var sports = new List<Sports>();
   var sagas = new List<Sagas>();
+  var superH = new List<SuperHeros>();
 
   Menu({Key key,
     @required this.token,
@@ -43,7 +48,8 @@ class Menu extends StatefulWidget {
     @required this.series,
     @required this.seriesAnimes,
     @required this.sports,
-    @required this.sagas
+    @required this.sagas,
+    @required this.superH
   }) : super(key: key);
 
   @override
@@ -58,9 +64,14 @@ class _Menu extends State<Menu> {
   var mapRencontres = new List<Map>();
   var listFinished = new List<bool>(11);
 
+  var logg = new Logger();
+
   @override
   void initState() {
     super.initState();
+    if(widget.superH==null) {
+      getAll(widget.token);
+    }
   }
 
   Future checkDatasInRealisateur(int nb, List listeTest) async {
@@ -114,35 +125,41 @@ class _Menu extends State<Menu> {
           break;
         case 7 :
           map = {
+            "domicile" : widget.superH[list[i]],
+            "exterieur" : widget.superH[list[i+1]]
+          };
+          break;
+        case 8 :
+          map = {
             "domicile" : widget.avengers[list[i]],
             "exterieur" : widget.avengers[list[i+1]]
           };
           break;
-        case 8 :
+        case 9 :
           map = {
             "domicile" : widget.chansons[list[i]],
             "exterieur" : widget.chansons[list[i+1]]
           };
           break;
-        case 9 :
+        case 10 :
           map = {
             "domicile" : widget.mechants[list[i]],
             "exterieur" : widget.mechants[list[i+1]]
           };
           break;
-        case 10 :
+        case 11 :
           map = {
             "domicile" : widget.disney[list[i]],
             "exterieur" : widget.disney[list[i+1]]
           };
           break;
-        case 11 :
+        case 12 :
           map = {
             "domicile" : widget.sports[list[i]],
             "exterieur" : widget.sports[list[i+1]]
           };
           break;
-        case 12 :
+        case 13 :
           map = {
             "domicile" : widget.sagas[list[i]],
             "exterieur" : widget.sagas[list[i+1]]
@@ -203,7 +220,8 @@ class _Menu extends State<Menu> {
                                       containerBouton(3, widget.jeux, "Jeux Vidéos"),
                                       containerBouton(4, widget.horreur, "Films d'horreur"),
                                       containerBouton(5, widget.series, "Séries"),
-                                      containerBouton(6, widget.seriesAnimes, "Séries Animés")
+                                      containerBouton(6, widget.seriesAnimes, "Séries Animés"),
+                                      containerBouton(7, widget.superH, "Super Héros")
                                     ],
                                   ),
                                 )
@@ -237,12 +255,12 @@ class _Menu extends State<Menu> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                  containerBouton(7, widget.avengers, "Avengers"),
-                                  containerBouton(8, widget.chansons, "Chansons Disney"),
-                                  containerBouton(9, widget.mechants, "Méchants"),
-                                  containerBouton(10, widget.disney, "Films Disney"),
-                                  containerBouton(11, widget.sports, "Sports"),
-                                  containerBouton(12, widget.sagas, "Sagas")
+                                  containerBouton(8, widget.avengers, "Avengers"),
+                                  containerBouton(9, widget.chansons, "Chansons Disney"),
+                                  containerBouton(10, widget.mechants, "Méchants"),
+                                  containerBouton(11, widget.disney, "Films Disney"),
+                                  containerBouton(12, widget.sports, "Sports"),
+                                  containerBouton(13, widget.sagas, "Sagas")
                                 ],
                               ),
                             ),
@@ -283,5 +301,139 @@ class _Menu extends State<Menu> {
       ),
       margin: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 20.0),
     );
+  }
+
+  getAll(String token) {
+    API.getMovies(token).then((response) {
+      setState(() {
+        try {
+          Iterable list = json.decode(response.body);
+          widget.films = list.map((film) => Films.fromJson(film)).toList();
+        } on NoSuchMethodError catch (e) {
+          logg.i(e.toString());
+        }
+      });
+    });
+    API.getUsers(token).then((response) {
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.realisateurs = list.map((model) => Tournoi.fromJson(model)).toList();
+        }
+      });
+    });
+    API.getGames(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.jeux = list.map((jeu) => Jeux.fromJson(jeu)).toList();
+        }
+      });
+    });
+    API.getHorreurs(token).then((response) {
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.horreur = list.map((hor) => Films.fromJson(hor)).toList();
+        }
+      });
+    });
+    API.getSeries(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.series = list.map((serie) => Series.fromJson(serie)).toList();
+        }
+      });
+    });
+    API.getSeriesAnimes(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.seriesAnimes = list.map((serie) => Series.fromJson(serie)).toList();
+        }
+      });
+    });
+    API.getAvengers(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.avengers = list.map((heros) => Avengers.fromJson(heros)).toList();
+        }
+      });
+    });
+    API.getSongs(token).then((response) {
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.chansons = list.map((model) => Chansons.fromJson(model)).toList();
+        }
+      });
+    });
+    API.getMechants(token).then((response) {
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.mechants = list.map((mechant) => Mechants.fromJson(mechant)).toList();
+        }
+      });
+    });
+    API.getDisney(token).then((response) {
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.disney = list.map((disneyF) => Disney.fromJson(disneyF)).toList();
+        }
+      });
+    });
+    API.getSports(token).then((response){
+      print(response.body);
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.sports = list.map((sport) => Sports.fromJson(sport)).toList();
+        }
+      });
+    });
+    API.getSagas(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.sagas = list.map((saga) => Sagas.fromJson(saga)).toList();
+        }
+      });
+    });
+    API.getSuperHeros(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.superH = list.map((sh) => SuperHeros.fromJson(sh)).toList();
+        }
+      });
+    });
   }
 }

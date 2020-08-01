@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:choisi/menu.dart';
+import 'package:choisi/model/superheros.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
@@ -64,9 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
   var seriesAnimes = new List<Series>();
   var sports = new List<Sports>();
   var sagas = new List<Sagas>();
+  var superHeros = new List<SuperHeros>();
 
   var logg = new Logger();
-  var diviseur = 100/12;
   var erreur;
 
   bool allIsFinish = false;
@@ -82,7 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
             token = value.result.token;
             allIsFinish = true;
           });
-          _getAll();
+          print(superHeros.isEmpty);
+          if(superHeros.isEmpty) {
+            getAll();
+          }
         }
       } on Error catch(e) {
         progressBool = false;
@@ -95,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  _getAll() {
+  getAll() {
     API.getMovies(token).then((response) {
       setState(() {
         try {
@@ -197,6 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
     API.getSports(token).then((response){
+      print(response.body);
       setState(() {
         if(response.body == null) {
           logg.i("Erreur");
@@ -213,6 +218,16 @@ class _MyHomePageState extends State<MyHomePage> {
         } else {
           Iterable list = json.decode(response.body);
           sagas = list.map((saga) => Sagas.fromJson(saga)).toList();
+        }
+      });
+    });
+    API.getSuperHeros(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          superHeros = list.map((sh) => SuperHeros.fromJson(sh)).toList();
         }
       });
     });
@@ -238,7 +253,7 @@ InkWell imageLogo(String image, String url) {
     var shared = await SharedPreferences.getInstance();
     shared.setString("tourSuivant", "");
     Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bContext){
-      return new Menu(token: token,);
+      return new Menu(token: token, films: films, realisateurs: realisateurs,chansons: chansons, jeux: jeux, avengers: avengers, mechants: mechants, disney: disney, horreur: horreur, series: series, seriesAnimes: seriesAnimes, sports: sports, sagas: sagas, superH: superHeros,);
     }));
   }
 

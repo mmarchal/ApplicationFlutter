@@ -92,21 +92,24 @@ class _Resultat extends State<Resultat> {
         return new Text("Votre série animé préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
         break;
       case 7 :
-        return new Text("Votre Avengers préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        return new Text("Votre super héros préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
         break;
       case 8 :
-        return new Text("Votre chanson Disney préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        return new Text("Votre Avengers préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
         break;
       case 9 :
-        return new Text("Votre méchant de film préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        return new Text("Votre chanson Disney préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
         break;
       case 10 :
-        return new Text("Votre film Disney préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        return new Text("Votre méchant de film préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
         break;
       case 11 :
-        return new Text("Votre sport préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        return new Text("Votre film Disney préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
         break;
       case 12 :
+        return new Text("Votre sport préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 13 :
         return new Text("Votre saga de film préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
         break;
     }
