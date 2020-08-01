@@ -70,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var erreur;
 
   bool allIsFinish = false;
+  bool progressBool = true;
 
   @override
   void initState() {
@@ -84,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _getAll();
         }
       } on Error catch(e) {
+        progressBool = false;
         print(e.stackTrace);
         setState(() {
           erreur = e;
@@ -280,7 +282,7 @@ InkWell imageLogo(String image, String url) {
             Padding(padding: EdgeInsets.all(20.0),),
             Container(
               child: Visibility(
-                visible: !allIsFinish,
+                visible: progressBool,
                 child: CircularProgressIndicator()
               ),
             ),
@@ -319,7 +321,9 @@ InkWell imageLogo(String image, String url) {
             new FlatButton(
               child: new Text("OK, recharger la page !"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext bC){
+                  return new MyHomePage();
+                }));
               },
             ),
           ],
