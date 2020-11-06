@@ -48,7 +48,7 @@ class _Match extends State<Match> {
 
   AudioPlayer audioPlayerD = new AudioPlayer();
   AudioPlayer audioPlayerE = new AudioPlayer();
-  
+
   List<String> contenusDatasD = new List();
   List<String> contenusDatasE = new List();
 
@@ -94,9 +94,9 @@ class _Match extends State<Match> {
       return new Scaffold(
         body: new Center(
           child: new Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: widgetAselectionner()
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: widgetAselectionner()
           ),
         ),
       );
@@ -157,7 +157,7 @@ class _Match extends State<Match> {
         return AlertDialog(
           title: Text('Confirmation', style: TextStyle(fontFamily: 'Disney'),),
           content: Text(
-              'Vous préférez \n${tournoi.nom} ?', style: TextStyle(fontFamily: 'Disney'), textAlign: TextAlign.center,
+            'Vous préférez \n${tournoi.nom} ?', style: TextStyle(fontFamily: 'Disney'), textAlign: TextAlign.center,
           ),
           actions: <Widget>[
             FlatButton(
@@ -434,23 +434,23 @@ class _Match extends State<Match> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             CachedNetworkImage(
-              imageUrl: domicile.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
             new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
-           new Column(
+            new Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                  new Text("Ses réalisations", style: TextStyle(fontFamily: 'Lemon'),),
-                  new Text(domicile.info1, style: TextStyle(fontFamily: 'Lemon'),),
-              new Padding(padding: EdgeInsets.only(left: 20.0)),
-              new Text(domicile.info2, style: TextStyle(fontFamily: 'Lemon'),),
-              new Padding(padding: EdgeInsets.only(left: 20.0)),
-              new Text(domicile.info3, style: TextStyle(fontFamily: 'Lemon'),)
+                new Text("Ses réalisations", style: TextStyle(fontFamily: 'Lemon'),),
+                new Text(domicile.info1, style: TextStyle(fontFamily: 'Lemon'),),
+                new Padding(padding: EdgeInsets.only(left: 20.0)),
+                new Text(domicile.info2, style: TextStyle(fontFamily: 'Lemon'),),
+                new Padding(padding: EdgeInsets.only(left: 20.0)),
+                new Text(domicile.info3, style: TextStyle(fontFamily: 'Lemon'),)
               ],
             )
           ],
@@ -469,7 +469,7 @@ class _Match extends State<Match> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             CachedNetworkImage(
-              imageUrl: exterieur.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -510,7 +510,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: domicile.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -533,7 +533,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: exterieur.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -562,7 +562,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: domicile.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -596,7 +596,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: exterieur.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -640,7 +640,7 @@ class _Match extends State<Match> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     CachedNetworkImage(
-                      imageUrl: domicile.image,
+                      imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
                       width: MediaQuery.of(context).size.width/2,
                       height: MediaQuery.of(context).size.width/2,
                       placeholder: (context,url) => CircularProgressIndicator(),
@@ -688,7 +688,7 @@ class _Match extends State<Match> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     CachedNetworkImage(
-                      imageUrl: exterieur.image,
+                      imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
                       width: MediaQuery.of(context).size.width/2,
                       height: MediaQuery.of(context).size.width/2,
                       placeholder: (context,url) => CircularProgressIndicator(),
@@ -734,7 +734,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: domicile.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -758,7 +758,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: exterieur.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -787,7 +787,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: domicile.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -811,7 +811,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: exterieur.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -847,7 +847,7 @@ class _Match extends State<Match> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     CachedNetworkImage(
-                      imageUrl: domicile.image,
+                      imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
                       width: MediaQuery.of(context).size.width/2,
                       height: MediaQuery.of(context).size.width/2,
                       placeholder: (context,url) => CircularProgressIndicator(),
@@ -889,7 +889,7 @@ class _Match extends State<Match> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     CachedNetworkImage(
-                      imageUrl: exterieur.image,
+                      imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
                       width: MediaQuery.of(context).size.width/2,
                       height: MediaQuery.of(context).size.width/2,
                       placeholder: (context,url) => CircularProgressIndicator(),
@@ -929,7 +929,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: domicile.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -954,7 +954,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: exterieur.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -976,30 +976,30 @@ class _Match extends State<Match> {
   void createWidgetsSagas(List<Widget> list) {
     Widget widget1 = new InkWell(
       child: new Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height/2,
-        color: Colors.orange.shade200,
-        child: new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            new Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
-                CachedNetworkImage(
-                  imageUrl: domicile.image,
-                  width: MediaQuery.of(context).size.width/2,
-                  height: MediaQuery.of(context).size.width/2,
-                  placeholder: (context,url) => CircularProgressIndicator(),
-                  errorWidget: (context,url,error) => new Icon(Icons.error),
-                ),
-                new Text("Nombre de films : ${domicile.nombreFilms.toString()}", style: TextStyle(fontFamily: 'Lemon'),),
-              ],
-            ),
-            xmlConverter(domicile)
-          ],
-        )
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2,
+          color: Colors.orange.shade200,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
+                  CachedNetworkImage(
+                    imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
+                    width: MediaQuery.of(context).size.width/2,
+                    height: MediaQuery.of(context).size.width/2,
+                    placeholder: (context,url) => CircularProgressIndicator(),
+                    errorWidget: (context,url,error) => new Icon(Icons.error),
+                  ),
+                  new Text("Nombre de films : ${domicile.nombreFilms.toString()}", style: TextStyle(fontFamily: 'Lemon'),),
+                ],
+              ),
+              xmlConverter(domicile)
+            ],
+          )
       ),
       onTap: () {
         realChoisi(domicile);
@@ -1007,9 +1007,9 @@ class _Match extends State<Match> {
     );
     Widget widget2 = new InkWell(
       child: new Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height/2,
-        color: Colors.teal.shade600,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2,
+          color: Colors.teal.shade600,
           child: new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.min,
@@ -1019,7 +1019,7 @@ class _Match extends State<Match> {
                 children: <Widget>[
                   new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
                   CachedNetworkImage(
-                    imageUrl: exterieur.image,
+                    imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
                     width: MediaQuery.of(context).size.width/2,
                     height: MediaQuery.of(context).size.width/2,
                     placeholder: (context,url) => CircularProgressIndicator(),
@@ -1043,7 +1043,7 @@ class _Match extends State<Match> {
   Widget xmlConverter(datas) {
     XmlDocument xmlData = xml.parse(datas.contenu);
     List<String> listContenu = new List();
-    
+
     var test = xmlData.findAllElements('element');
     var noms = test.map((f) => f.findElements('nomFilm').single.text).toList();
     var annees = test.map((t) => t.findElements('dateSortieFilm').single.text).toList();
@@ -1081,7 +1081,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: domicile.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),
@@ -1105,7 +1105,7 @@ class _Match extends State<Match> {
           children: <Widget>[
             new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
             CachedNetworkImage(
-              imageUrl: exterieur.image,
+              imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
               width: MediaQuery.of(context).size.width/2,
               height: MediaQuery.of(context).size.width/2,
               placeholder: (context,url) => CircularProgressIndicator(),

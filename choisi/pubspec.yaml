@@ -28,7 +28,7 @@ dependencies:
   path_provider: any
   http: ^0.11.3+16
   shared_preferences: any
-  cached_network_image: ^1.1.0
+  cached_network_image: ^2.0.0
   audioplayers: any
   flutter_launcher_icons: any
   xml: ^3.5.0

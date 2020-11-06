@@ -216,12 +216,12 @@ class _Menu extends State<Menu> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       containerBouton(1, widget.films, "Films"),
-                                      containerBouton(2, widget.realisateurs, "Réalisateurs"),
+                                      //containerBouton(2, widget.realisateurs, "Réalisateurs"),
                                       containerBouton(3, widget.jeux, "Jeux Vidéos"),
-                                      containerBouton(4, widget.horreur, "Films d'horreur"),
+                                      //containerBouton(4, widget.horreur, "Films d'horreur"),
                                       containerBouton(5, widget.series, "Séries"),
                                       containerBouton(6, widget.seriesAnimes, "Séries Animés"),
-                                      containerBouton(7, widget.superH, "Super Héros")
+                                      //containerBouton(7, widget.superH, "Super Héros")
                                     ],
                                   ),
                                 )
@@ -256,9 +256,9 @@ class _Menu extends State<Menu> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   containerBouton(8, widget.avengers, "Avengers"),
-                                  containerBouton(9, widget.chansons, "Chansons Disney"),
+                                  //containerBouton(9, widget.chansons, "Chansons Disney"),
                                   containerBouton(10, widget.mechants, "Méchants"),
-                                  containerBouton(11, widget.disney, "Films Disney"),
+                                  //containerBouton(11, widget.disney, "Films Disney"),
                                   containerBouton(12, widget.sports, "Sports"),
                                   containerBouton(13, widget.sagas, "Sagas")
                                 ],

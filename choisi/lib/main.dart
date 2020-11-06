@@ -81,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
         if(value.status==200) {
           setState(() {
             token = value.result.token;
+            progressBool = false;
             allIsFinish = true;
           });
           print(superHeros.isEmpty);

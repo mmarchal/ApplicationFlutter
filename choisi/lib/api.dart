@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:choisi/model/ApiResponse.dart';
 import 'package:http/http.dart' as http;
 
-const urlServeur = "http://appliraspberry.ddns.net:8181";
+const urlServeur  = "http://ns329111.ip-37-187-107.eu:16512";
 
 class API {
   static Future getUsers(String token) {
@@ -140,8 +140,8 @@ class API {
   static Future getToken() async {
     var url = urlServeur + "/token";
     Map data = {
-      "password": "marchal",
-      "username": "maxime"
+      "password": "sof@59chOix",
+      "username": "app"
     };
     //encode Map to JSON
     var body = json.encode(data);
