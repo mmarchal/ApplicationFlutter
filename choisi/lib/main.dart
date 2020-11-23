@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:choisi/menu.dart';
+import 'package:choisi/menuV2.dart';
 import 'package:choisi/model/superheros.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,8 +22,6 @@ import 'package:choisi/model/tournoi.dart';
 
 
 void main() {
-  List<DeviceOrientation> values = [DeviceOrientation.portraitUp];
-  SystemChrome.setPreferredOrientations(values);
   runApp(MyApp());
 }
 
@@ -70,13 +69,13 @@ class _MyHomePageState extends State<MyHomePage> {
   var logg = new Logger();
   var erreur;
 
-  bool allIsFinish = false;
-  bool progressBool = true;
+  bool allIsFinish = true;
+  bool progressBool = false;
 
   @override
   void initState() {
     super.initState();
-    API.getToken().then((value) {
+   /* API.getToken().then((value) {
       try {
         if(value.status==200) {
           setState(() {
@@ -97,10 +96,10 @@ class _MyHomePageState extends State<MyHomePage> {
         });
         showErrorDialog();
       }
-    });
+    });*/
   }
 
-  getAll() {
+  /*getAll() {
     API.getMovies(token).then((response) {
       setState(() {
         try {
@@ -233,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
   }
-  
+  */
 
 InkWell imageLogo(String image, String url) {
     return new InkWell(
@@ -259,8 +258,19 @@ InkWell imageLogo(String image, String url) {
     }));
   }
 
+  Future changePageV2(/*bool sexe*/) async {
+    var shared = await SharedPreferences.getInstance();
+    shared.setString("tourSuivant", "");
+    Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bContext){
+      return new MenuV2(token: token/*, films: films, realisateurs: realisateurs,chansons: chansons, jeux: jeux, avengers: avengers, mechants: mechants, disney: disney, horreur: horreur, series: series, seriesAnimes: seriesAnimes, sports: sports, sagas: sagas, superH: superHeros,*/);
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return Scaffold(
       body: Center(
         child: Column(
@@ -307,7 +317,7 @@ InkWell imageLogo(String image, String url) {
               visible: allIsFinish,
               child: RaisedButton(
                 onPressed: () {
-                  changePage();
+                  changePageV2();
                   //_showDialog();
                 },
                 child: new Text(

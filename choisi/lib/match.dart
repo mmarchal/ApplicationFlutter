@@ -17,7 +17,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xml/xml.dart';
 import 'model/tournoi.dart';
 import 'dart:convert';
-
 import 'package:xml/xml.dart' as xml;
 
 class Match extends StatefulWidget {
