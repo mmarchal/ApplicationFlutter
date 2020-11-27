@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 class Films {
 
   String id;
@@ -47,4 +49,16 @@ class Films {
         acteur2 = json['acteur2'],
         annee = json['annee'],
         synopsis = json['synopsis'];
+
+  Films.testJson(String test) {
+    String json = test.split('Films')[1];
+    Map map = jsonDecode(json);
+    this.id = map['id'].toString();
+    this.nom = map['nom'];
+    this.image = map['image'];
+    this.acteur1 = map['acteur1'];
+    this.acteur2 = map['acteur2'];
+    this.annee = map['annee'];
+    this.synopsis = map['synopsis'];
+  }
 }

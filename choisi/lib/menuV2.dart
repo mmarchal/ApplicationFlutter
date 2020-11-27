@@ -32,23 +32,8 @@ class _MenuV2 extends State<MenuV2> {
       width: MediaQuery.of(context).size.width /2.5,
       child: RaisedButton(
         onPressed: () {
-          switch (id) {
-            case 1 :
-              API.getMovies(widget.token).then((response) {
-                setState(() {
-                  try {
-                    Iterable list = json.decode(response.body);
-                    print(list);
-                    tournoi = list.map((film) => Films.fromJson(film)).toList();
-                  } on NoSuchMethodError catch (e) {
-                    logg.i(e.toString());
-                  }
-                });
-              });
-
-          }
           Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bC) {
-            return new TableauV2(nom: nom, token: widget.token, liste: tournoi);
+            return new TableauV2(id : id, nom: nom, token: widget.token);
           }));
         },
         child: new Text(nom, style: TextStyle(fontFamily: 'Disney'), textAlign: TextAlign.center,),

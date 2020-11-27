@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-   /* API.getToken().then((value) {
+    API.getToken().then((value) {
       try {
         if(value.status==200) {
           setState(() {
@@ -83,10 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
             progressBool = false;
             allIsFinish = true;
           });
-          print(superHeros.isEmpty);
+          /*print(superHeros.isEmpty);
           if(superHeros.isEmpty) {
             getAll();
-          }
+          }*/
         }
       } on Error catch(e) {
         progressBool = false;
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
         });
         showErrorDialog();
       }
-    });*/
+    });
   }
 
   /*getAll() {
