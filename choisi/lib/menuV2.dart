@@ -33,7 +33,7 @@ class _MenuV2 extends State<MenuV2> {
       child: RaisedButton(
         onPressed: () {
           Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bC) {
-            return new TableauV2(id : id, nom: nom, token: widget.token);
+            return new TableauV2(id : id, nom: nom, token: widget.token, isStarting: true,);
           }));
         },
         child: new Text(nom, style: TextStyle(fontFamily: 'Disney'), textAlign: TextAlign.center,),

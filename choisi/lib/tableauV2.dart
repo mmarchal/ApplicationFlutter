@@ -1,8 +1,9 @@
 import 'dart:convert';
-
 import 'package:choisi/api.dart';
+import 'package:easy_dialog/easy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'model/films.dart';
 
@@ -11,8 +12,9 @@ class TableauV2 extends StatefulWidget {
   final int id;
   final String nom;
   final String token;
+  final bool isStarting;
 
-  TableauV2({Key key, @required this.id, this.nom, @required this.token}) : super(key: key);
+  TableauV2({Key key, @required this.id, this.nom, @required this.token, @required this.isStarting}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -36,16 +38,22 @@ class _TableauV2 extends State<TableauV2> {
   List listeRencontres = new List();
 
   List<Color> listeCouleurs = [
-    Colors.red.shade200,
-    Colors.blue.shade200,
-    Colors.green.shade200,
+    Colors.blue,
+    Colors.green,
   ];
+
+  Color couleurDepart;
 
   var logg = new Logger();
 
   @override
   void initState() {
     super.initState();
+    if(widget.isStarting) {
+      setState(() {
+        couleurDepart = listeCouleurs[0];
+      });
+    }
     switch (widget.id) {
       case 1 :
         API.getMovies(widget.token).then((response) {
@@ -92,6 +100,11 @@ class _TableauV2 extends State<TableauV2> {
     );
   }
 
+  checkDuels(int longueur) {
+    int count = (longueur/2).round();
+
+  }
+
   double relativeDouble(BuildContext context, double originalDouble) {
     double defaultRatio = 812 / 375;
     double currentRatio = MediaQuery.of(context).size.height / MediaQuery.of(context).size.width;
@@ -135,34 +148,98 @@ class _TableauV2 extends State<TableauV2> {
       children: List.generate(listeRencontres.length, (index) {
         Films domicile = Films.testJson(listeRencontres[index].domicile.toString());
         Films exterieur = Films.testJson(listeRencontres[index].exterieur.toString());
-        return Card(
-          elevation: 10,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                child: Text(
-                  '${domicile.nom}',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline6,
+        return InkWell(
+          child: Card(
+            elevation: 10,
+            color: couleurDepart,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  child: Text(
+                    '${domicile.nom}',
+                    textAlign: TextAlign.center,
+                      style: GoogleFonts.aBeeZee()
+                  ),
                 ),
-              ),
-              Image.asset(
-                "assets/versus.png",
-                width: MediaQuery.of(context).size.width/7,
-              ),
-              Container(
-                child: Text(
-                  '${exterieur.nom}',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline6,
+                Image.asset(
+                  "assets/versus.png",
+                  width: MediaQuery.of(context).size.width/7,
                 ),
-              ),
-            ],
+                Container(
+                  child: Text(
+                    '${exterieur.nom}',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.aBeeZee(),
+                  ),
+                ),
+              ],
+            ),
           ),
+          onTap: () {
+            alertDuel(index, domicile, exterieur);
+          },
         );
       }),
     );
   }
+
+  void alertDuel(int index, Films domicile, Films exterieur) {
+    String titre = "Duel n°${index+1}";
+    return EasyDialog(
+        cardColor: Colors.white,
+        title: Text(titre, style: GoogleFonts.aBeeZee(),),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height/1.8,
+        contentList: contenuDuel(domicile, exterieur)
+    ).show(context);
+  }
+
+  List<Widget> contenuDuel(Films d, Films e) {
+    Widget w = SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Image.network("http://ns329111.ip-37-187-107.eu/sofyan/${d.image}", width: MediaQuery.of(context).size.width/1.8,),
+                  Container(
+                    child: Text('''
+                  Nom du film : ${d.nom}\n
+                  Année de sortie : ${d.annee}\n
+                  Acteur : ${d.acteur1} / ${d.acteur2}
+                '''),
+                  )
+                ],
+              )
+          ),
+          Image.asset("assets/versus.png", width: MediaQuery.of(context).size.width/8),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Image.network("http://ns329111.ip-37-187-107.eu/sofyan/${e.image}", width: MediaQuery.of(context).size.width/1.8,),
+                Container(
+                  child: Text('''
+                  Nom du film : ${e.nom}\n
+                  Année de sortie : ${e.annee}\n
+                  Acteur : ${e.acteur1} / ${e.acteur2}
+                '''),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+    List<Widget> liste = new List();
+    liste.add(w);
+    return liste;
+  }
+
+
 }

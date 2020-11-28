@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:choisi/menu.dart';
 import 'package:choisi/menuV2.dart';
 import 'package:choisi/model/superheros.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
@@ -22,6 +23,10 @@ import 'package:choisi/model/tournoi.dart';
 
 
 void main() {
+  /*LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('google_fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });*/
   runApp(MyApp());
 }
 
