@@ -96,13 +96,42 @@ class _TableauV2 extends State<TableauV2> {
           )
         ],
       ),
-      body: tableauBody(),
+      body: checkDuels(),
     );
   }
 
-  checkDuels(int longueur) {
-    int count = (longueur/2).round();
+  checkDuels() {
+    return ListView(
+      children: affichageDuels(listeRencontres.length),
+    );
+  }
 
+  affichageDuels(int length) {
+
+    List<Widget> listes = new List();
+    listes.add(Container(margin: EdgeInsets.all(20), child: Text("Le tirage au sort à été effectué !", style: GoogleFonts.aBeeZee(color: Colors.red), textAlign: TextAlign.center, textScaleFactor: 2.0,),));
+
+    for (int count=0; count < length; count++ ) {
+      Rencontre r = listeRencontres[count];
+      Films domicile = Films.testJson(r.domicile.toString());
+      Films exterieur = Films.testJson(r.exterieur.toString());
+
+      Widget w = Card(
+        elevation: 20,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(domicile.nom, style: GoogleFonts.aBeeZee(),),
+            Image.asset("assets/versus.png", width: MediaQuery.of(context).size.width/10,),
+            Text(exterieur.nom, style: GoogleFonts.aBeeZee(),),
+          ],
+        ),
+      );
+      listes.add(w);
+    }
+
+    return listes;
   }
 
   double relativeDouble(BuildContext context, double originalDouble) {
@@ -240,6 +269,7 @@ class _TableauV2 extends State<TableauV2> {
     liste.add(w);
     return liste;
   }
+
 
 
 }
