@@ -35,6 +35,7 @@ dependencies:
   logger: ^0.7.0+2
   easy_dialog: any
   google_fonts: any
+  folding_cell: ^1.0.0
 
 dev_dependencies:
   flutter_test:

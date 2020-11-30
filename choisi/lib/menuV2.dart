@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:choisi/api.dart';
 import 'package:choisi/model/films.dart';
 import 'package:choisi/tableauV2.dart';
+import 'package:choisi/utilities/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
@@ -25,16 +26,42 @@ class _MenuV2 extends State<MenuV2> {
 
   var logg = new Logger();
 
-  List<Films> tournoi = new List();
+  List listeTournoi = new List();
+  List listeRencontres = new List();
 
   containerBouton(int id, String nom ) {
     return Container(
       width: MediaQuery.of(context).size.width /2.5,
       child: RaisedButton(
         onPressed: () {
-          Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bC) {
-            return new TableauV2(id : id, nom: nom, token: widget.token, isStarting: true,);
-          }));
+          switch (id) {
+            case 1 :
+              API.getMovies(widget.token).then((response) {
+                setState(() {
+                  try {
+                    Iterable list = json.decode(response.body);
+                    listeTournoi = list.map((film) => Films.fromJson(film)).toList();
+                  } on NoSuchMethodError catch (e) {
+                    logg.i(e.toString());
+                  } finally {
+                    listeTournoi = API.shuffle(listeTournoi);
+                    for (int i =0 ; i<listeTournoi.length ; i=i+2) {
+                      Map map = {
+                        "domicile" : listeTournoi[i],
+                        "exterieur" : listeTournoi[i+1]
+                      };
+                      listeRencontres.add(Rencontre.fromJson(map));
+                    }
+                    for( int i = 0; i<listeRencontres.length; i++) {
+                      SharedApp().initStringValue("bool", "film-${i.toString()}", false);
+                    }
+                    Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bC) {
+                      return new TableauV2(nom: nom, token: widget.token, liste: listeRencontres);
+                    }));
+                  }
+                });
+              });
+          }
         },
         child: new Text(nom, style: TextStyle(fontFamily: 'Disney'), textAlign: TextAlign.center,),
       ),
@@ -44,9 +71,6 @@ class _MenuV2 extends State<MenuV2> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
     return new Scaffold(
       body: new Center(
         child: new Column(
