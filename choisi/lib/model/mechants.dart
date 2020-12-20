@@ -7,21 +7,21 @@ class Mechants {
 
   @override
   String toString() {
-    return 'Mechants{"id": "$id", "nom": "$nom", "image": "$image", "ennemi": "$colonne1"}';
+    return 'Mechants{"id": "$id", "nom": "$nom", "image": "$image", "colonne1": "$colonne1"}';
   }
 
   void fromMap(Map<String, dynamic> map) {
     this.id = map["id"];
     this.nom = map["nom"];
     this.image = map["image"];
-    this.colonne1 = map["ennemi"];
+    this.colonne1 = map["colonne1"];
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       "nom" : this.nom,
       "image" : this.image,
-      "ennemi" : this.colonne1,
+      "colonne1" : this.colonne1,
     };
     if(id != null) {
       map["id"] = this.id;
@@ -33,5 +33,5 @@ class Mechants {
         id = json['id'].toString(),
         nom = json['nom'],
         image = json['image'],
-        colonne1 = json['ennemi'];
+        colonne1 = json['colonne1'];
 }

@@ -280,7 +280,7 @@ class _Match extends State<Match> {
             }
             break;
           case 2 :
-            must = decoupe[i].split("Tournoi")[1];
+            must = decoupe[i].split("Realisateur")[1];
             try {
               Realisateur data = Realisateur.fromJson(json.decode(must));
               listeT.add(data);

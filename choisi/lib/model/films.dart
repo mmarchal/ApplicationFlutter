@@ -11,7 +11,7 @@ class Films {
 
   @override
   String toString() {
-    return 'Films{"id": "$id", "nom": "$nom", "image": "$image", "acteur1": "$colonne1", "acteur2": "$colonne2", "annee": "$colonne3", "synopsis": "$colonne4"}';
+    return 'Films{"id": "$id", "nom": "$nom", "image": "$image", "colonne1": "$colonne1", "colonne2": "$colonne2", "colonne3": "$colonne3", "colonne4": "$colonne4"}';
   }
 
   void fromMap(Map<String, dynamic> map) {

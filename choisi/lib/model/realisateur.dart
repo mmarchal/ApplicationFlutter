@@ -8,7 +8,7 @@ class Realisateur {
 
   @override
   String toString() {
-    return 'Realisateur{"id": "$id", "nom": "$nom", "image": "$image", "info1": "$colonne1", "info2": "$colonne2", "info3": "$colonne3"}';
+    return 'Realisateur{"id": "$id", "nom": "$nom", "image": "$image", "colonne1": "$colonne1", "colonne": "$colonne2", "colonne3": "$colonne3"}';
   }
 
   void fromMap(Map<String, dynamic> map) {

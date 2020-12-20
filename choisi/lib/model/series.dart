@@ -8,7 +8,7 @@ class Series {
 
   @override
   String toString() {
-    return 'Series{"id": "$id", "nom": "$nom", "image": "$image", "anneeDebut": "$colonne1", "anneeFin": "$colonne2"}';
+    return 'Series{"id": "$id", "nom": "$nom", "image": "$image", "colonne1": "$colonne1", "colonne2": "$colonne2"}';
   }
 
   void fromMap(Map<String, dynamic> map) {

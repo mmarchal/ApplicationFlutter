@@ -8,23 +8,23 @@ class Sagas {
 
   @override
   String toString() {
-    return 'Sagas{"id": "$id", "nom": "$nom", "image": "$image", "nombreFilms": "$colonne1", "contenu": "$colonne2"}';
+    return 'Sagas{"id": "$id", "nom": "$nom", "image": "$image", "colonne1": "$colonne1", "colonne2": "$colonne2"}';
   }
 
   void fromMap(Map<String, dynamic> map) {
     this.id = map["id"];
     this.nom = map["nom"];
     this.image = map["image"];
-    this.colonne1 = map["nombreFilms"];
-    this.colonne2 = map["contenu"];
+    this.colonne1 = map["colonne1"];
+    this.colonne2 = map["colonne2"];
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       "nom" : this.nom,
       "image" : this.image,
-      "nombreFilms" : this.colonne1,
-      "contenu" : this.colonne2,
+      "colonne1" : this.colonne1,
+      "colonne2" : this.colonne2,
     };
     if(id != null) {
       map["id"] = this.id;
@@ -36,6 +36,6 @@ class Sagas {
         id = json['id'].toString(),
         nom = json['nom'],
         image = json['image'],
-        colonne1 = json['nombreFilms'],
-        colonne2 = json['contenu'];
+        colonne1 = json['colonne1'],
+        colonne2 = json['colonne2'];
 }
