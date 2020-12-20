@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:choisi/api.dart';
 import 'package:flutter/material.dart';
 import 'package:choisi/menu.dart';
-import 'package:choisi/model/tournoi.dart';
+import 'package:choisi/model/realisateur.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Resultat extends StatefulWidget {

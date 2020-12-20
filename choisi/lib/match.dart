@@ -15,7 +15,7 @@ import 'package:choisi/tableau.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xml/xml.dart';
-import 'model/tournoi.dart';
+import 'model/realisateur.dart';
 import 'dart:convert';
 
 import 'package:xml/xml.dart' as xml;
@@ -211,11 +211,11 @@ class _Match extends State<Match> {
       switch (widget.id) {
         case 1 :
           data = shared.getString("tourSuivant").split("Films")[1];
-          vainqueur = Tournoi.fromJson(json.decode(data));
+          vainqueur = Realisateur.fromJson(json.decode(data));
           break;
         case 2 :
           data = shared.getString("tourSuivant").split("Tournoi")[1];
-          vainqueur = Tournoi.fromJson(json.decode(data));
+          vainqueur = Realisateur.fromJson(json.decode(data));
           break;
         case 3 :
           data = shared.getString("tourSuivant").split("Jeux")[1];
@@ -282,7 +282,7 @@ class _Match extends State<Match> {
           case 2 :
             must = decoupe[i].split("Tournoi")[1];
             try {
-              Tournoi data = Tournoi.fromJson(json.decode(must));
+              Realisateur data = Realisateur.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
@@ -446,11 +446,11 @@ class _Match extends State<Match> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 new Text("Ses réalisations", style: TextStyle(fontFamily: 'Lemon'),),
-                new Text(domicile.info1, style: TextStyle(fontFamily: 'Lemon'),),
+                new Text(domicile.colonne1, style: TextStyle(fontFamily: 'Lemon'),),
                 new Padding(padding: EdgeInsets.only(left: 20.0)),
-                new Text(domicile.info2, style: TextStyle(fontFamily: 'Lemon'),),
+                new Text(domicile.colonne2, style: TextStyle(fontFamily: 'Lemon'),),
                 new Padding(padding: EdgeInsets.only(left: 20.0)),
-                new Text(domicile.info3, style: TextStyle(fontFamily: 'Lemon'),)
+                new Text(domicile.colonne3, style: TextStyle(fontFamily: 'Lemon'),)
               ],
             )
           ],
@@ -481,11 +481,11 @@ class _Match extends State<Match> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 new Text("Ses réalisations", style: TextStyle(fontFamily: 'Lemon'),),
-                new Text(exterieur.info1, style: TextStyle(fontFamily: 'Lemon'),),
+                new Text(exterieur.colonne1, style: TextStyle(fontFamily: 'Lemon'),),
                 new Padding(padding: EdgeInsets.only(left: 20.0)),
-                new Text(exterieur.info2, style: TextStyle(fontFamily: 'Lemon'),),
+                new Text(exterieur.colonne2, style: TextStyle(fontFamily: 'Lemon'),),
                 new Padding(padding: EdgeInsets.only(left: 20.0)),
-                new Text(exterieur.info3, style: TextStyle(fontFamily: 'Lemon'),)
+                new Text(exterieur.colonne3, style: TextStyle(fontFamily: 'Lemon'),)
               ],
             )
           ],
@@ -571,7 +571,7 @@ class _Match extends State<Match> {
             //new Text(domicile.musique)
             new IconButton(
               onPressed: () {
-                (songIsPlayingD) ? audioPlayerD.pause() : audioPlayerD.play(domicile.musique);
+                (songIsPlayingD) ? audioPlayerD.pause() : audioPlayerD.play(domicile.colonne1);
                 setState(() {
                   songIsPlayingD = !songIsPlayingD;
                 });
@@ -604,7 +604,7 @@ class _Match extends State<Match> {
             ),
             new IconButton(
               onPressed: () {
-                (songIsPlayingE) ? audioPlayerE.pause() : audioPlayerE.play(exterieur.musique);
+                (songIsPlayingE) ? audioPlayerE.pause() : audioPlayerE.play(exterieur.colonne1);
                 setState(() {
                   songIsPlayingE = !songIsPlayingE;
                 });
@@ -646,19 +646,19 @@ class _Match extends State<Match> {
                       placeholder: (context,url) => CircularProgressIndicator(),
                       errorWidget: (context,url,error) => new Icon(Icons.error),
                     ),
-                    Text("Année : ${domicile.annee}", style: TextStyle(fontFamily: 'Lemon'),)
+                    Text("Année : ${domicile.colonne3}", style: TextStyle(fontFamily: 'Lemon'),)
                   ],
                 ),
                 new Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Acteurs principaux", style: TextStyle(fontFamily: 'Lemon'),),
-                    Text(domicile.acteur1, style: TextStyle(fontFamily: 'Lemon'),),
-                    Text(domicile.acteur2, style: TextStyle(fontFamily: 'Lemon'),),
+                    Text(domicile.colonne1, style: TextStyle(fontFamily: 'Lemon'),),
+                    Text(domicile.colonne2, style: TextStyle(fontFamily: 'Lemon'),),
                     Container(
                       margin: EdgeInsets.only(top: 30),
                       width: MediaQuery.of(context).size.width/3,
-                      child: Text("Synopsis : ${domicile.synopsis}", textScaleFactor: 0.7, textAlign: TextAlign.center,),
+                      child: Text("Synopsis : ${domicile.colonne4}", textScaleFactor: 0.7, textAlign: TextAlign.center,),
                     )
                   ],
                 )
@@ -694,19 +694,19 @@ class _Match extends State<Match> {
                       placeholder: (context,url) => CircularProgressIndicator(),
                       errorWidget: (context,url,error) => new Icon(Icons.error),
                     ),
-                    Text("Année : ${domicile.annee}", style: TextStyle(fontFamily: 'Lemon'),)
+                    Text("Année : ${domicile.colonne3}", style: TextStyle(fontFamily: 'Lemon'),)
                   ],
                 ),
                 new Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text("Acteurs principaux", style: TextStyle(fontFamily: 'Lemon'),),
-                    Text(exterieur.acteur1, style: TextStyle(fontFamily: 'Lemon'),),
-                    Text(exterieur.acteur2, style: TextStyle(fontFamily: 'Lemon'),),
+                    Text(exterieur.colonne1, style: TextStyle(fontFamily: 'Lemon'),),
+                    Text(exterieur.colonne2, style: TextStyle(fontFamily: 'Lemon'),),
                     Container(
                       margin: EdgeInsets.only(top: 30),
                       width: MediaQuery.of(context).size.width/3,
-                      child: Text("Synopsis : ${exterieur.synopsis}", textScaleFactor: 0.7, textAlign: TextAlign.center,),
+                      child: Text("Synopsis : ${exterieur.colonne4}", textScaleFactor: 0.7, textAlign: TextAlign.center,),
                     )
                   ],
                 )
@@ -740,7 +740,7 @@ class _Match extends State<Match> {
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
-            new Text("Capacité : ${domicile.description}", style: TextStyle(fontFamily: 'Lemon'),)
+            new Text("Capacité : ${domicile.colonne1}", style: TextStyle(fontFamily: 'Lemon'),)
           ],
         ),
       ),
@@ -764,7 +764,7 @@ class _Match extends State<Match> {
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
-            new Text("Capacité : ${exterieur.description}", style: TextStyle(fontFamily: 'Lemon'),)
+            new Text("Capacité : ${exterieur.colonne1}", style: TextStyle(fontFamily: 'Lemon'),)
           ],
         ),
       ),
@@ -793,7 +793,7 @@ class _Match extends State<Match> {
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
-            new Text("Ennemi : ${domicile.ennemi}", style: TextStyle(fontFamily: 'Lemon'),)
+            new Text("Ennemi : ${domicile.colonne1}", style: TextStyle(fontFamily: 'Lemon'),)
           ],
         ),
       ),
@@ -817,7 +817,7 @@ class _Match extends State<Match> {
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
-            new Text("Ennemi : ${exterieur.ennemi}", style: TextStyle(fontFamily: 'Lemon'),)
+            new Text("Ennemi : ${exterieur.colonne1}", style: TextStyle(fontFamily: 'Lemon'),)
           ],
         ),
       ),
@@ -853,14 +853,14 @@ class _Match extends State<Match> {
                       placeholder: (context,url) => CircularProgressIndicator(),
                       errorWidget: (context,url,error) => new Icon(Icons.error),
                     ),
-                    Text("Année de sortie : ${domicile.annee}", style: TextStyle(fontFamily: 'Lemon'),)
+                    Text("Année de sortie : ${domicile.colonne1}", style: TextStyle(fontFamily: 'Lemon'),)
                   ],
                 ),
                 new Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text("Gentil : ${domicile.gentil}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
-                    Text("Méchant : ${domicile.mechant}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
+                    Text("Gentil : ${domicile.colonne2}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
+                    Text("Méchant : ${domicile.colonne3}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
                   ],
                 )
               ],
@@ -895,14 +895,14 @@ class _Match extends State<Match> {
                       placeholder: (context,url) => CircularProgressIndicator(),
                       errorWidget: (context,url,error) => new Icon(Icons.error),
                     ),
-                    Text("Année de sortie : ${exterieur.annee}", style: TextStyle(fontFamily: 'Lemon'),)
+                    Text("Année de sortie : ${exterieur.colonne1}", style: TextStyle(fontFamily: 'Lemon'),)
                   ],
                 ),
                 new Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text("Gentil : ${exterieur.gentil}", style: TextStyle(fontFamily: 'Lemon'), textScaleFactor: 0.8,),
-                    Text("Méchant : ${exterieur.mechant}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
+                    Text("Gentil : ${exterieur.colonne2}", style: TextStyle(fontFamily: 'Lemon'), textScaleFactor: 0.8,),
+                    Text("Méchant : ${exterieur.colonne3}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
                   ],
                 )
               ],
@@ -919,6 +919,7 @@ class _Match extends State<Match> {
   }
 
   void createWidgetsSeries(List<Widget> list) {
+    print(domicile);
     Widget widget1 = new InkWell(
       child: new Container(
         width: MediaQuery.of(context).size.width,
@@ -935,8 +936,8 @@ class _Match extends State<Match> {
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
-            Text("Année de début : ${domicile.anneeDebut}", style: TextStyle(fontFamily: 'Lemon'),),
-            Text("Année de fin : ${domicile.anneeFin}", style: TextStyle(fontFamily: 'Lemon'),),
+            Text("Année de début : ${domicile.colonne1}", style: TextStyle(fontFamily: 'Lemon'),),
+            Text("Année de fin : ${domicile.colonne2}", style: TextStyle(fontFamily: 'Lemon'),),
           ],
         ),
       ),
@@ -960,8 +961,8 @@ class _Match extends State<Match> {
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
-            Text("Année de début : ${exterieur.anneeDebut}", style: TextStyle(fontFamily: 'Lemon'),),
-            Text("Année de fin : ${exterieur.anneeFin}", style: TextStyle(fontFamily: 'Lemon'),),
+            Text("Année de début : ${exterieur.colonne1}", style: TextStyle(fontFamily: 'Lemon'),),
+            Text("Année de fin : ${exterieur.colonne2}", style: TextStyle(fontFamily: 'Lemon'),),
           ],
         ),
       ),
@@ -994,7 +995,7 @@ class _Match extends State<Match> {
                     placeholder: (context,url) => CircularProgressIndicator(),
                     errorWidget: (context,url,error) => new Icon(Icons.error),
                   ),
-                  new Text("Nombre de films : ${domicile.nombreFilms.toString()}", style: TextStyle(fontFamily: 'Lemon'),),
+                  new Text("Nombre de films : ${domicile.colonne1.toString()}", style: TextStyle(fontFamily: 'Lemon'),),
                 ],
               ),
               xmlConverter(domicile)
@@ -1025,7 +1026,7 @@ class _Match extends State<Match> {
                     placeholder: (context,url) => CircularProgressIndicator(),
                     errorWidget: (context,url,error) => new Icon(Icons.error),
                   ),
-                  new Text("Nombre de films : ${exterieur.nombreFilms.toString()}", style: TextStyle(fontFamily: 'Lemon'),),
+                  new Text("Nombre de films : ${exterieur.colonne1.toString()}", style: TextStyle(fontFamily: 'Lemon'),),
                 ],
               ),
               xmlConverter(exterieur)
@@ -1041,7 +1042,7 @@ class _Match extends State<Match> {
   }
 
   Widget xmlConverter(datas) {
-    XmlDocument xmlData = xml.parse(datas.contenu);
+    XmlDocument xmlData = xml.parse(datas.colonne2);
     List<String> listContenu = new List();
 
     var test = xmlData.findAllElements('element');
@@ -1087,7 +1088,7 @@ class _Match extends State<Match> {
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
-            Text("Pouvoir : ${domicile.pouvoir}", style: TextStyle(fontFamily: 'Lemon'),),
+            Text("Pouvoir : ${domicile.colonne1}", style: TextStyle(fontFamily: 'Lemon'),),
           ],
         ),
       ),
@@ -1111,7 +1112,7 @@ class _Match extends State<Match> {
               placeholder: (context,url) => CircularProgressIndicator(),
               errorWidget: (context,url,error) => new Icon(Icons.error),
             ),
-            Text("Pouvoir : ${exterieur.pouvoir}", style: TextStyle(fontFamily: 'Lemon'),),
+            Text("Pouvoir : ${exterieur.colonne1}", style: TextStyle(fontFamily: 'Lemon'),),
           ],
         ),
       ),

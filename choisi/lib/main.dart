@@ -17,7 +17,7 @@ import 'package:choisi/model/mechants.dart';
 import 'package:choisi/model/sagas.dart';
 import 'package:choisi/model/series.dart';
 import 'package:choisi/model/sports.dart';
-import 'package:choisi/model/tournoi.dart';
+import 'package:choisi/model/realisateur.dart';
 
 
 void main() {
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String token;
 
   var films = new List<Films>();
-  var realisateurs = new List<Tournoi>();
+  var realisateurs = new List<Realisateur>();
   var chansons = new List<Chansons>();
   var jeux = new List<Jeux>();
   var avengers = new List<Avengers>();
@@ -111,13 +111,13 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       });
     });
-    API.getUsers(token).then((response) {
+    API.getRealisateurs(token).then((response) {
       setState(() {
         if(response.body == null) {
           logg.i("Erreur");
         } else {
           Iterable list = json.decode(response.body);
-          realisateurs = list.map((model) => Tournoi.fromJson(model)).toList();
+          realisateurs = list.map((model) => Realisateur.fromJson(model)).toList();
         }
       });
     });

@@ -3,28 +3,28 @@ class Series {
   String id;
   String nom;
   String image;
-  String anneeDebut;
-  String anneeFin;
+  String colonne1;
+  String colonne2;
 
   @override
   String toString() {
-    return 'Series{"id": "$id", "nom": "$nom", "image": "$image", "anneeDebut": "$anneeDebut", "anneeFin": "$anneeFin"}';
+    return 'Series{"id": "$id", "nom": "$nom", "image": "$image", "anneeDebut": "$colonne1", "anneeFin": "$colonne2"}';
   }
 
   void fromMap(Map<String, dynamic> map) {
     this.id = map["id"];
     this.nom = map["nom"];
     this.image = map["image"];
-    this.anneeDebut = map["anneeDebut"];
-    this.anneeFin = map["anneeFin"];
+    this.colonne1 = map["colonne1"];
+    this.colonne2 = map["colonne2"];
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       "nom" : this.nom,
       "image" : this.image,
-      "anneeDebut" : this.anneeDebut,
-      "anneeFin" : this.anneeFin,
+      "colonne1" : this.colonne1,
+      "colonne2" : this.colonne2,
     };
     if(id != null) {
       map["id"] = this.id;
@@ -36,6 +36,6 @@ class Series {
         id = json['id'].toString(),
         nom = json['nom'],
         image = json['image'],
-        anneeDebut = json['anneeDebut'],
-        anneeFin = json['anneeFin'];
+        colonne1 = json['colonne1'],
+        colonne2 = json['colonne2'];
 }

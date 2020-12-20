@@ -3,28 +3,28 @@ class Sagas {
   String id;
   String nom;
   String image;
-  String nombreFilms;
-  String contenu;
+  String colonne1;
+  String colonne2;
 
   @override
   String toString() {
-    return 'Sagas{"id": "$id", "nom": "$nom", "image": "$image", "nombreFilms": "$nombreFilms", "contenu": "$contenu"}';
+    return 'Sagas{"id": "$id", "nom": "$nom", "image": "$image", "nombreFilms": "$colonne1", "contenu": "$colonne2"}';
   }
 
   void fromMap(Map<String, dynamic> map) {
     this.id = map["id"];
     this.nom = map["nom"];
     this.image = map["image"];
-    this.nombreFilms = map["nombreFilms"];
-    this.contenu = map["contenu"];
+    this.colonne1 = map["nombreFilms"];
+    this.colonne2 = map["contenu"];
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       "nom" : this.nom,
       "image" : this.image,
-      "nombreFilms" : this.nombreFilms,
-      "contenu" : this.contenu,
+      "nombreFilms" : this.colonne1,
+      "contenu" : this.colonne2,
     };
     if(id != null) {
       map["id"] = this.id;
@@ -36,6 +36,6 @@ class Sagas {
         id = json['id'].toString(),
         nom = json['nom'],
         image = json['image'],
-        nombreFilms = json['nombreFilms'],
-        contenu = json['contenu'];
+        colonne1 = json['nombreFilms'],
+        colonne2 = json['contenu'];
 }

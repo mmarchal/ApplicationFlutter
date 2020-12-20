@@ -10,7 +10,7 @@ import 'package:choisi/model/sagas.dart';
 import 'package:choisi/model/series.dart';
 import 'package:choisi/model/sports.dart';
 import 'package:choisi/model/superheros.dart';
-import 'package:choisi/model/tournoi.dart';
+import 'package:choisi/model/realisateur.dart';
 import 'package:flutter/material.dart';
 
 class Tableau extends StatefulWidget {
@@ -214,7 +214,7 @@ class _Tableau extends State<Tableau> {
 
 class Rencontre {
   Films domicileF, exterieurF;
-  Tournoi domicileT, exterieurT; //Réalisateur
+  Realisateur domicileT, exterieurT; //Réalisateur
   Jeux domicileJ, exterieurJ;
   Films domicileH, exterieurH;
   Series domicileS, exterieurS;

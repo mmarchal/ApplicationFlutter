@@ -4,34 +4,34 @@ class Films {
   String id;
   String nom;
   String image;
-  String acteur1;
-  String acteur2;
-  String annee;
-  String synopsis;
+  String colonne1;
+  String colonne2;
+  String colonne3;
+  String colonne4;
 
   @override
   String toString() {
-    return 'Films{"id": "$id", "nom": "$nom", "image": "$image", "acteur1": "$acteur1", "acteur2": "$acteur2", "annee": "$annee", "synopsis": "$synopsis"}';
+    return 'Films{"id": "$id", "nom": "$nom", "image": "$image", "acteur1": "$colonne1", "acteur2": "$colonne2", "annee": "$colonne3", "synopsis": "$colonne4"}';
   }
 
   void fromMap(Map<String, dynamic> map) {
     this.id = map["id"];
     this.nom = map["nom"];
     this.image = map["image"];
-    this.acteur1 = map["acteur1"];
-    this.acteur2 = map["acteur2"];
-    this.annee = map["annee"];
-    this.synopsis = map["synopsis"];
+    this.colonne1 = map["colonne1"];
+    this.colonne2 = map["colonne2"];
+    this.colonne3 = map["colonne3"];
+    this.colonne4 = map["colonne4"];
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       "nom" : this.nom,
       "image" : this.image,
-      "acteur1" : this.acteur1,
-      "acteur2" : this.acteur2,
-      "annee" : this.annee,
-      "synopsis" : this.synopsis,
+      "colonne1" : this.colonne1,
+      "colonne2" : this.colonne2,
+      "colonne3" : this.colonne3,
+      "colonne4" : this.colonne4,
     };
     if(id != null) {
       map["id"] = this.id;
@@ -43,8 +43,8 @@ class Films {
         id = json['id'].toString(),
         nom = json['nom'],
         image = json['image'],
-        acteur1 = json['acteur1'],
-        acteur2 = json['acteur2'],
-        annee = json['annee'],
-        synopsis = json['synopsis'];
+        colonne1 = json['colonne1'],
+        colonne2 = json['colonne2'],
+        colonne3 = json['colonne3'],
+        colonne4 = json['colonne4'];
 }

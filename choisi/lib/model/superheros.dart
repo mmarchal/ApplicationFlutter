@@ -3,11 +3,11 @@ class SuperHeros {
   String id;
   String nom;
   String image;
-  String pouvoir;
+  String colonne1;
 
   @override
   String toString() {
-    return 'SuperHeros{"id": "$id", "nom": "$nom", "image": "$image", "pouvoir": "$pouvoir"}';
+    return 'SuperHeros{"id": "$id", "nom": "$nom", "image": "$image", "pouvoir": "$colonne1"}';
   }
 
 
@@ -15,14 +15,14 @@ class SuperHeros {
     this.id = map["id"];
     this.nom = map["nom"];
     this.image = map["image"];
-    this.pouvoir = map["pouvoir"];
+    this.colonne1 = map["pouvoir"];
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       "nom" : this.nom,
       "image" : this.image,
-      "pouvoir" : this.pouvoir,
+      "pouvoir" : this.colonne1,
     };
     if(id != null) {
       map["id"] = this.id;
@@ -34,6 +34,6 @@ class SuperHeros {
         id = json['id'].toString(),
         nom = json['nom'],
         image = json['image'],
-        pouvoir = json['pouvoir'];
+        colonne1 = json['pouvoir'];
 
 }

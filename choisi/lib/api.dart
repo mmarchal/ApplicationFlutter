@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 const urlServeur  = "http://ns329111.ip-37-187-107.eu:16512";
 
 class API {
-  static Future getUsers(String token) {
+  static Future getRealisateurs(String token) {
     var url = urlServeur + "/realisateur";
     return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"

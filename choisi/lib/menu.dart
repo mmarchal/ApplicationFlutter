@@ -16,13 +16,13 @@ import 'package:choisi/model/mechants.dart';
 import 'package:choisi/model/sagas.dart';
 import 'package:choisi/model/series.dart';
 import 'package:choisi/model/sports.dart';
-import 'package:choisi/model/tournoi.dart';
+import 'package:choisi/model/realisateur.dart';
 
 class Menu extends StatefulWidget {
 
   String token;
   var films = new List<Films>();
-  var realisateurs = new List<Tournoi>();
+  var realisateurs = new List<Realisateur>();
   var chansons = new List<Chansons>();
   var jeux = new List<Jeux>();
   var avengers = new List<Avengers>();
@@ -216,9 +216,9 @@ class _Menu extends State<Menu> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       containerBouton(1, widget.films, "Films"),
-                                      //containerBouton(2, widget.realisateurs, "Réalisateurs"),
+                                      containerBouton(2, widget.realisateurs, "Réalisateurs"),
                                       containerBouton(3, widget.jeux, "Jeux Vidéos"),
-                                      //containerBouton(4, widget.horreur, "Films d'horreur"),
+                                      containerBouton(4, widget.horreur, "Films d'horreur"),
                                       containerBouton(5, widget.series, "Séries"),
                                       containerBouton(6, widget.seriesAnimes, "Séries Animés"),
                                       //containerBouton(7, widget.superH, "Super Héros")
@@ -314,13 +314,13 @@ class _Menu extends State<Menu> {
         }
       });
     });
-    API.getUsers(token).then((response) {
+    API.getRealisateurs(token).then((response) {
       setState(() {
         if(response.body == null) {
           logg.i("Erreur");
         } else {
           Iterable list = json.decode(response.body);
-          widget.realisateurs = list.map((model) => Tournoi.fromJson(model)).toList();
+          widget.realisateurs = list.map((model) => Realisateur.fromJson(model)).toList();
         }
       });
     });
@@ -345,6 +345,7 @@ class _Menu extends State<Menu> {
       });
     });
     API.getSeries(token).then((response){
+      print(response.body);
       setState(() {
         if(response.body == null) {
           logg.i("Erreur");
@@ -405,7 +406,6 @@ class _Menu extends State<Menu> {
       });
     });
     API.getSports(token).then((response){
-      print(response.body);
       setState(() {
         if(response.body == null) {
           logg.i("Erreur");
