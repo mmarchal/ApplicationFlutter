@@ -277,6 +277,7 @@ class _Match extends State<Match> {
               listeT.add(data);
             } catch(e) {
               print(e);
+              print(must);
             }
             break;
           case 2 :
@@ -694,7 +695,7 @@ class _Match extends State<Match> {
                       placeholder: (context,url) => CircularProgressIndicator(),
                       errorWidget: (context,url,error) => new Icon(Icons.error),
                     ),
-                    Text("Année : ${domicile.colonne3}", style: TextStyle(fontFamily: 'Lemon'),)
+                    Text("Année : ${exterieur.colonne3}", style: TextStyle(fontFamily: 'Lemon'),)
                   ],
                 ),
                 new Column(
