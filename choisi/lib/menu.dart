@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:choisi/api.dart';
 import 'package:choisi/main.dart';
+import 'package:choisi/model/acteurActrice.dart';
 import 'package:choisi/model/superheros.dart';
 import 'package:choisi/tableau.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,8 @@ class Menu extends StatefulWidget {
   var sports = new List<Sports>();
   var sagas = new List<Sagas>();
   var superH = new List<SuperHeros>();
+  var acteurs = new List<ActeurActrice>();
+  var actrices = new List<ActeurActrice>();
 
   Menu({Key key,
     @required this.token,
@@ -49,7 +52,9 @@ class Menu extends StatefulWidget {
     @required this.seriesAnimes,
     @required this.sports,
     @required this.sagas,
-    @required this.superH
+    @required this.superH,
+    @required this.acteurs,
+    @required this.actrices
   }) : super(key: key);
 
   @override
@@ -165,6 +170,18 @@ class _Menu extends State<Menu> {
             "exterieur" : widget.sagas[list[i+1]]
           };
           break;
+        case 14 :
+          map = {
+            "domicile" : widget.acteurs[list[i]],
+            "exterieur" : widget.acteurs[list[i+1]]
+          };
+          break;
+        case 15 :
+          map = {
+            "domicile" : widget.actrices[list[i]],
+            "exterieur" : widget.actrices[list[i+1]]
+          };
+          break;
       }
       mapRencontres.add(map);
     }
@@ -258,9 +275,11 @@ class _Menu extends State<Menu> {
                                   containerBouton(8, widget.avengers, "Avengers"),
                                   //containerBouton(9, widget.chansons, "Chansons Disney"),
                                   containerBouton(10, widget.mechants, "Méchants"),
-                                  //containerBouton(11, widget.disney, "Films Disney"),
+                                  containerBouton(11, widget.disney, "Films Disney"),
                                   containerBouton(12, widget.sports, "Sports"),
-                                  containerBouton(13, widget.sagas, "Sagas")
+                                  containerBouton(13, widget.sagas, "Sagas"),
+                                  containerBouton(14, widget.acteurs, "Acteurs"),
+                                  containerBouton(15, widget.actrices, "Actrices")
                                 ],
                               ),
                             ),
@@ -432,6 +451,26 @@ class _Menu extends State<Menu> {
         } else {
           Iterable list = json.decode(response.body);
           widget.superH = list.map((sh) => SuperHeros.fromJson(sh)).toList();
+        }
+      });
+    });
+    API.getActeurs(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.acteurs = list.map((sh) => ActeurActrice.fromJson(sh)).toList();
+        }
+      });
+    });
+    API.getActrices(token).then((response) {
+      setState(() {
+        if (response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.actrices = list.map((sh) => ActeurActrice.fromJson(sh)).toList();
         }
       });
     });

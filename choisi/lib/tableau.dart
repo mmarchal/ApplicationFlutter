@@ -1,5 +1,6 @@
 import 'package:choisi/match.dart';
 import 'package:choisi/menu.dart';
+import 'package:choisi/model/acteurActrice.dart';
 import 'package:choisi/model/avengers.dart';
 import 'package:choisi/model/chansons.dart';
 import 'package:choisi/model/disney.dart';
@@ -114,6 +115,16 @@ class _Tableau extends State<Tableau> {
           listeDomicile.add(rencontre.domicileSa);
           listeExterieur.add(rencontre.exterieurSa);
           break;
+        case 14 :
+          Rencontre rencontre = Rencontre.acteursFromJson(test);
+          listeDomicile.add(rencontre.domicileActeur);
+          listeExterieur.add(rencontre.exterieurActeur);
+          break;
+        case 15 :
+          Rencontre rencontre = Rencontre.actricesFromJson(test);
+          listeDomicile.add(rencontre.domicileActrice);
+          listeExterieur.add(rencontre.exterieurActrice);
+          break;
       }
     });
   }
@@ -226,7 +237,7 @@ class Rencontre {
   Sports domicileSp, exterieurSp;
   Sagas domicileSa, exterieurSa;
   SuperHeros domicileSh, exterieurSh;
-
+  ActeurActrice domicileActeur, exterieurActeur, domicileActrice, exterieurActrice;
 
   Rencontre.filmsFromJson(Map map) :
         domicileF = map["domicile"],
@@ -279,4 +290,12 @@ class Rencontre {
   Rencontre.sagasFromJson(Map test) :
       domicileSa = test["domicile"],
       exterieurSa = test["exterieur"];
+
+  Rencontre.acteursFromJson(Map test) :
+        domicileActeur = test["domicile"],
+        exterieurActeur = test["exterieur"];
+
+  Rencontre.actricesFromJson(Map test) :
+        domicileActrice = test["domicile"],
+        exterieurActrice = test["exterieur"];
 }

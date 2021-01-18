@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:choisi/menu.dart';
+import 'package:choisi/model/acteurActrice.dart';
 import 'package:choisi/model/superheros.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -66,6 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
   var sports = new List<Sports>();
   var sagas = new List<Sagas>();
   var superHeros = new List<SuperHeros>();
+  var acteurs = new List<ActeurActrice>();
+  var actrices = new List<ActeurActrice>();
 
   var logg = new Logger();
   var erreur;
@@ -232,6 +235,26 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       });
     });
+    API.getActeurs(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          acteurs = list.map((sh) => ActeurActrice.fromJson(sh)).toList();
+        }
+      });
+    });
+    API.getActrices(token).then((response){
+      setState(() {
+        if(response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          actrices = list.map((sh) => ActeurActrice.fromJson(sh)).toList();
+        }
+      });
+    });
   }
   
 
@@ -255,7 +278,7 @@ InkWell imageLogo(String image, String url) {
     var shared = await SharedPreferences.getInstance();
     shared.setString("tourSuivant", "");
     Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bContext){
-      return new Menu(token: token, films: films, realisateurs: realisateurs,chansons: chansons, jeux: jeux, avengers: avengers, mechants: mechants, disney: disney, horreur: horreur, series: series, seriesAnimes: seriesAnimes, sports: sports, sagas: sagas, superH: superHeros,);
+      return new Menu(token: token, films: films, realisateurs: realisateurs,chansons: chansons, jeux: jeux, avengers: avengers, mechants: mechants, disney: disney, horreur: horreur, series: series, seriesAnimes: seriesAnimes, sports: sports, sagas: sagas, superH: superHeros, acteurs: acteurs, actrices: actrices);
     }));
   }
 

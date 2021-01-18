@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:choisi/model/acteurActrice.dart';
 import 'package:choisi/model/avengers.dart';
 import 'package:choisi/model/chansons.dart';
 import 'package:choisi/model/disney.dart';
@@ -145,6 +146,12 @@ class _Match extends State<Match> {
       case 13 :
         createWidgetsSagas(list);
         break;
+      case 14 :
+        createWidgetsActeursActrices(list);
+        break;
+      case 15 :
+        createWidgetsActeursActrices(list);
+        break;
     }
     return list;
   }
@@ -183,6 +190,7 @@ class _Match extends State<Match> {
     widget.exterieurs.removeAt(0);
     var sharedPreferences = await SharedPreferences.getInstance();
     String test = sharedPreferences.getString("tourSuivant");
+    print(test);
     if(test ==null) {
       sharedPreferences.setString("tourSuivant", tournoi.toString());
     } else {
@@ -260,6 +268,14 @@ class _Match extends State<Match> {
         case 13 :
           data = shared.getString("tourSuivant").split("Sagas")[1];
           vainqueur = Sagas.fromJson(json.decode(data));
+          break;
+        case 14 :
+          data = shared.getString("tourSuivant").split("ActeurActrice")[1];
+          vainqueur = ActeurActrice.fromJson(json.decode(data));
+          break;
+        case 15 :
+          data = shared.getString("tourSuivant").split("ActeurActrice")[1];
+          vainqueur = ActeurActrice.fromJson(json.decode(data));
           break;
       }
       Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bContext){
@@ -355,6 +371,8 @@ class _Match extends State<Match> {
           case 10 :
             must = decoupe[i].split("Mechants")[1];
             try {
+              var test = json.decode(must);
+              print(test);
               Mechants data = Mechants.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
@@ -380,8 +398,29 @@ class _Match extends State<Match> {
             }
             break;
           case 13 :
+            must = decoupe[i].split("Sagas")[1];
             try {
               Sagas data = Sagas.fromJson(json.decode(decoupe[i]));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 14 :
+            must = decoupe[i].split("ActeurActrice")[1];
+            try {
+              var test = json.decode(must);
+              print(test);
+              ActeurActrice data = ActeurActrice.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 15 :
+            must = decoupe[i].split("ActeurActrice")[1];
+            try {
+              ActeurActrice data = ActeurActrice.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
@@ -857,13 +896,6 @@ class _Match extends State<Match> {
                     Text("Année de sortie : ${domicile.colonne1}", style: TextStyle(fontFamily: 'Lemon'),)
                   ],
                 ),
-                new Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text("Gentil : ${domicile.colonne2}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
-                    Text("Méchant : ${domicile.colonne3}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
-                  ],
-                )
               ],
             )
           ],
@@ -899,13 +931,6 @@ class _Match extends State<Match> {
                     Text("Année de sortie : ${exterieur.colonne1}", style: TextStyle(fontFamily: 'Lemon'),)
                   ],
                 ),
-                new Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text("Gentil : ${exterieur.colonne2}", style: TextStyle(fontFamily: 'Lemon'), textScaleFactor: 0.8,),
-                    Text("Méchant : ${exterieur.colonne3}", style: TextStyle(fontFamily: 'Lemon'),textScaleFactor: 0.8,),
-                  ],
-                )
               ],
             )
           ],
@@ -1116,6 +1141,71 @@ class _Match extends State<Match> {
             Text("Pouvoir : ${exterieur.colonne1}", style: TextStyle(fontFamily: 'Lemon'),),
           ],
         ),
+      ),
+      onTap: () {
+        realChoisi(exterieur);
+      },
+    );
+    list.add(widget1);
+    list.add(widget2);
+  }
+
+  void createWidgetsActeursActrices(List<Widget> list) {
+    Widget widget1 = new InkWell(
+      child: new Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2,
+          color: Colors.orange.shade200,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
+                  CachedNetworkImage(
+                    imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
+                    width: MediaQuery.of(context).size.width/2,
+                    height: MediaQuery.of(context).size.width/2,
+                    placeholder: (context,url) => CircularProgressIndicator(),
+                    errorWidget: (context,url,error) => new Icon(Icons.error),
+                  ),
+                  new Text("Films : ${domicile.colonne1.toString()}\n${domicile.colonne2.toString()}\n", style: TextStyle(fontFamily: 'Lemon'),),
+                ],
+              ),
+            ],
+          )
+      ),
+      onTap: () {
+        realChoisi(domicile);
+      },
+    );
+    Widget widget2 = new InkWell(
+      child: new Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2,
+          color: Colors.teal.shade600,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
+                  CachedNetworkImage(
+                    imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
+                    width: MediaQuery.of(context).size.width/2,
+                    height: MediaQuery.of(context).size.width/2,
+                    placeholder: (context,url) => CircularProgressIndicator(),
+                    errorWidget: (context,url,error) => new Icon(Icons.error),
+                  ),
+                  new Text("Films : ${exterieur.colonne1.toString()}\n${exterieur.colonne2.toString()}\n", style: TextStyle(fontFamily: 'Lemon'),),
+                ],
+              ),
+            ],
+          )
       ),
       onTap: () {
         realChoisi(exterieur);

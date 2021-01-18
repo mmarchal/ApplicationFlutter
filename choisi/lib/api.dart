@@ -28,7 +28,27 @@ class API {
   }
 
   static Future getDisney(String token) {
-    var url = urlServeur + "/dessinsanimes";
+    var url = urlServeur + "/disney";
+    return http.get(url, headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
+    });
+  }
+
+  static Future getActeurs(String token) {
+    var url = urlServeur + "/acteurs";
+    return http.get(url, headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
+    });
+  }
+
+  static Future getActrices(String token) {
+    var url = urlServeur + "/actrices";
     return http.get(url, headers: {
       HttpHeaders.authorizationHeader : "Bearer $token"
     }).catchError((err) {

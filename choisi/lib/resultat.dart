@@ -112,6 +112,12 @@ class _Resultat extends State<Resultat> {
       case 13 :
         return new Text("Votre saga de film préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
         break;
+      case 14 :
+        return new Text("Votre acteur préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
+      case 15 :
+        return new Text("Votre actrice préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
     }
   }
 
