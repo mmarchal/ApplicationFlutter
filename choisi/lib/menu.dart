@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:choisi/api.dart';
 import 'package:choisi/main.dart';
 import 'package:choisi/model/acteurActrice.dart';
+import 'package:choisi/model/pokemon.dart';
 import 'package:choisi/model/superheros.dart';
 import 'package:choisi/tableau.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class Menu extends StatefulWidget {
   var superH = new List<SuperHeros>();
   var acteurs = new List<ActeurActrice>();
   var actrices = new List<ActeurActrice>();
+  var pokemons = new List<Pokemon>();
 
   Menu({Key key,
     @required this.token,
@@ -54,7 +56,8 @@ class Menu extends StatefulWidget {
     @required this.sagas,
     @required this.superH,
     @required this.acteurs,
-    @required this.actrices
+    @required this.actrices,
+    @required this.pokemons
   }) : super(key: key);
 
   @override
@@ -182,6 +185,12 @@ class _Menu extends State<Menu> {
             "exterieur" : widget.actrices[list[i+1]]
           };
           break;
+        case 16 :
+          map = {
+            "domicile" : widget.pokemons[list[i]],
+            "exterieur" : widget.pokemons[list[i+1]]
+          };
+          break;
       }
       mapRencontres.add(map);
     }
@@ -279,7 +288,8 @@ class _Menu extends State<Menu> {
                                   containerBouton(12, widget.sports, "Sports"),
                                   containerBouton(13, widget.sagas, "Sagas"),
                                   containerBouton(14, widget.acteurs, "Acteurs"),
-                                  containerBouton(15, widget.actrices, "Actrices")
+                                  containerBouton(15, widget.actrices, "Actrices"),
+                                  containerBouton(16, widget.pokemons, "Pokemons")
                                 ],
                               ),
                             ),
@@ -471,6 +481,16 @@ class _Menu extends State<Menu> {
         } else {
           Iterable list = json.decode(response.body);
           widget.actrices = list.map((sh) => ActeurActrice.fromJson(sh)).toList();
+        }
+      });
+    });
+    API.getPokemons(token).then((response) {
+      setState(() {
+        if (response.body == null) {
+          logg.i("Erreur");
+        } else {
+          Iterable list = json.decode(response.body);
+          widget.pokemons = list.map((p) => Pokemon.fromJson(p)).toList();
         }
       });
     });

@@ -7,6 +7,7 @@ import 'package:choisi/model/disney.dart';
 import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/mechants.dart';
+import 'package:choisi/model/pokemon.dart';
 import 'package:choisi/model/sagas.dart';
 import 'package:choisi/model/series.dart';
 import 'package:choisi/model/sports.dart';
@@ -15,10 +16,11 @@ import 'package:choisi/resultat.dart';
 import 'package:choisi/tableau.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:translator/translator.dart';
 import 'package:xml/xml.dart';
 import 'model/realisateur.dart';
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:xml/xml.dart' as xml;
 
 class Match extends StatefulWidget {
@@ -52,6 +54,8 @@ class _Match extends State<Match> {
 
   List<String> contenusDatasD = new List();
   List<String> contenusDatasE = new List();
+
+  final translator = GoogleTranslator();
 
   @override
   void initState() {
@@ -151,6 +155,9 @@ class _Match extends State<Match> {
         break;
       case 15 :
         createWidgetsActeursActrices(list);
+        break;
+      case 16 :
+        createWidgetsPokemons(list);
         break;
     }
     return list;
@@ -276,6 +283,10 @@ class _Match extends State<Match> {
         case 15 :
           data = shared.getString("tourSuivant").split("ActeurActrice")[1];
           vainqueur = ActeurActrice.fromJson(json.decode(data));
+          break;
+        case 16 :
+          data = shared.getString("tourSuivant").split("Pokemon")[1];
+          vainqueur = Pokemon.fromJson(json.decode(data));
           break;
       }
       Navigator.push(context, new MaterialPageRoute(builder: (BuildContext bContext){
@@ -421,6 +432,15 @@ class _Match extends State<Match> {
             must = decoupe[i].split("ActeurActrice")[1];
             try {
               ActeurActrice data = ActeurActrice.fromJson(json.decode(must));
+              listeT.add(data);
+            } catch(e) {
+              print(e);
+            }
+            break;
+          case 16 :
+            must = decoupe[i].split("Pokemon")[1];
+            try {
+              Pokemon data = Pokemon.fromJson(json.decode(must));
               listeT.add(data);
             } catch(e) {
               print(e);
@@ -1000,6 +1020,72 @@ class _Match extends State<Match> {
     list.add(widget2);
   }
 
+  void createWidgetsPokemons(List<Widget> list) {
+
+    Widget widget1 = new InkWell(
+      child: new Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2,
+          color: Colors.orange.shade200,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new Text(domicile.nom, style: TextStyle(fontFamily: 'Lemon'),),
+                  CachedNetworkImage(
+                    imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + domicile.image,
+                    width: MediaQuery.of(context).size.width/2,
+                    height: MediaQuery.of(context).size.width/2,
+                    placeholder: (context,url) => CircularProgressIndicator(),
+                    errorWidget: (context,url,error) => new Icon(Icons.error),
+                  ),
+                  new Text("Pokémon n° ${domicile.colonne1.toString()}", style: TextStyle(fontFamily: 'Lemon'),),
+                ],
+              ),
+            ],
+          )
+      ),
+      onTap: () {
+        realChoisi(domicile);
+      },
+    );
+    Widget widget2 = new InkWell(
+      child: new Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2,
+          color: Colors.teal.shade600,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new Text(exterieur.nom, style: TextStyle(fontFamily: 'Lemon'),),
+                  CachedNetworkImage(
+                    imageUrl: "http://ns329111.ip-37-187-107.eu/sofyan/" + exterieur.image,
+                    width: MediaQuery.of(context).size.width/2,
+                    height: MediaQuery.of(context).size.width/2,
+                    placeholder: (context,url) => CircularProgressIndicator(),
+                    errorWidget: (context,url,error) => new Icon(Icons.error),
+                  ),
+                  new Text("Pokémon n° ${exterieur.colonne1.toString()}", style: TextStyle(fontFamily: 'Lemon'),),
+                ],
+              ),
+            ],
+          )
+      ),
+      onTap: () {
+        realChoisi(exterieur);
+      },
+    );
+    list.add(widget1);
+    list.add(widget2);
+  }
+
   void createWidgetsSagas(List<Widget> list) {
     Widget widget1 = new InkWell(
       child: new Container(
@@ -1024,7 +1110,6 @@ class _Match extends State<Match> {
                   new Text("Nombre de films : ${domicile.colonne1.toString()}", style: TextStyle(fontFamily: 'Lemon'),),
                 ],
               ),
-              xmlConverter(domicile)
             ],
           )
       ),
@@ -1055,7 +1140,6 @@ class _Match extends State<Match> {
                   new Text("Nombre de films : ${exterieur.colonne1.toString()}", style: TextStyle(fontFamily: 'Lemon'),),
                 ],
               ),
-              xmlConverter(exterieur)
             ],
           )
       ),

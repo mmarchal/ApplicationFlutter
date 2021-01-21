@@ -157,6 +157,16 @@ class API {
     });
   }
 
+  static Future getPokemons(String token) {
+    var url = urlServeur + "/pokemon";
+    return http.get(url, headers: {
+      HttpHeaders.authorizationHeader : "Bearer $token"
+    }).catchError((err) {
+      print(err.toString());
+      return null;
+    });
+  }
+
   static Future getToken() async {
     var url = urlServeur + "/token";
     Map data = {

@@ -7,6 +7,7 @@ import 'package:choisi/model/disney.dart';
 import 'package:choisi/model/films.dart';
 import 'package:choisi/model/jeux.dart';
 import 'package:choisi/model/mechants.dart';
+import 'package:choisi/model/pokemon.dart';
 import 'package:choisi/model/sagas.dart';
 import 'package:choisi/model/series.dart';
 import 'package:choisi/model/sports.dart';
@@ -125,6 +126,11 @@ class _Tableau extends State<Tableau> {
           listeDomicile.add(rencontre.domicileActrice);
           listeExterieur.add(rencontre.exterieurActrice);
           break;
+        case 16 :
+          Rencontre rencontre = Rencontre.pokemonFromJson(test);
+          listeDomicile.add(rencontre.domicilePokemon);
+          listeExterieur.add(rencontre.exterieurPokemon);
+          break;
       }
     });
   }
@@ -238,6 +244,7 @@ class Rencontre {
   Sagas domicileSa, exterieurSa;
   SuperHeros domicileSh, exterieurSh;
   ActeurActrice domicileActeur, exterieurActeur, domicileActrice, exterieurActrice;
+  Pokemon domicilePokemon, exterieurPokemon;
 
   Rencontre.filmsFromJson(Map map) :
         domicileF = map["domicile"],
@@ -298,4 +305,8 @@ class Rencontre {
   Rencontre.actricesFromJson(Map test) :
         domicileActrice = test["domicile"],
         exterieurActrice = test["exterieur"];
+
+  Rencontre.pokemonFromJson(Map test) :
+        domicilePokemon = test["domicile"],
+        exterieurPokemon = test["exterieur"];
 }

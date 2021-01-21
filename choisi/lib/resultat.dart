@@ -118,6 +118,9 @@ class _Resultat extends State<Resultat> {
       case 15 :
         return new Text("Votre actrice préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
         break;
+      case 16 :
+        return new Text("Votre pokemon préféré est ${widget.vainqueur.nom}",textAlign: TextAlign.center, textScaleFactor: 3.0, style: new TextStyle(color: Colors.white),);
+        break;
     }
   }
 
